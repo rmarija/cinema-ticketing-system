@@ -1,13 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Zajednicki.Komunikacija
+﻿namespace Zajednicki.Komunikacija
 {
-    public class Operacija
+    public enum Operacija
     {
-
+        VratiSveProdavce,
+        VratiListuSvihKupaca,
+        VratiListuSvihKarata,
+        SacuvajRacun,
+        VratiRacunePoProdavcu,
+        VratiRacunPoId,
+        AzurirajRacun,
+        SacuvajKupca,
+        VratiKupcaPoId,
+        VratiKupcePoNazivuMesta,
+        AzurirajKupca,
+        ObrisiKupca,
+        Login,
+        SacuvajStrucnuSpremu,
+        VratiSvaMesta
     }
 }
