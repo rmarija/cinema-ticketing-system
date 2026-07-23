@@ -1,4 +1,4 @@
-namespace Server
+namespace Klijent
 {
     public partial class Form1 : Form
     {
