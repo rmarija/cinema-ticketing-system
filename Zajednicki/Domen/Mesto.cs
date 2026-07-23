@@ -50,7 +50,7 @@ namespace Zajednicki.Domen
         public SqlParameter[] GetUpdateParameters()
         {
             return new SqlParameter[] {
-                new SqlParameter("@idMesto", IdMesto),
+                new SqlParameter("@id", IdMesto),
                 new SqlParameter("@naziv", Naziv),
                 new SqlParameter("@postanskiBroj", PostanskiBroj)
             };

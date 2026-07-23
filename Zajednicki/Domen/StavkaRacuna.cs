@@ -78,7 +78,7 @@ namespace Zajednicki.Domen
         public SqlParameter[] GetUpdateParameters()
         {
             return new SqlParameter[] {
-                new SqlParameter("@idRacun", Racun.IdRacun),
+                new SqlParameter("@id", Racun.IdRacun),
                 new SqlParameter("@rb", Rb),
                 new SqlParameter("@kolicina", Kolicina),
                 new SqlParameter("@cena", Cena),

@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace Zajednicki.Domen
 {
-    internal class PrSS
+    public class PrSS
     {
+        public DateOnly DatumSticanja { get; set; }
+        public Prodavac Prodavac { get; set; }
+        public StrucnaSprema StrucnaSprema { get; set; }
     }
 }

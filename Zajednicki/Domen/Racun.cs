@@ -12,11 +12,9 @@ namespace Zajednicki.Domen
         public string NacinPlacanja { get; set; }
         public double UkupanIznos { get; set; }
 
-        // Povezujemo ostale klase umesto stranih ključeva
         public Prodavac Prodavac { get; set; }
         public Kupac Kupac { get; set; }
 
-        // Ključna stvar: Lista stavki
         public List<StavkaRacuna> Stavke { get; set; } = new List<StavkaRacuna>();
 
         public string TableName => "Racun";
@@ -40,7 +38,6 @@ namespace Zajednicki.Domen
                 new SqlParameter("@datumCekiranja", DatumCekiranja),
                 new SqlParameter("@nacinPlacanja", NacinPlacanja),
                 new SqlParameter("@ukupanIznos", UkupanIznos),
-                // Uzimamo ID iz objekata
                 new SqlParameter("@idProdavac", Prodavac.IdProdavac),
                 new SqlParameter("@idKupac", Kupac.IdKupac)
             };
@@ -58,8 +55,7 @@ namespace Zajednicki.Domen
                     DatumProdaje = (DateTime)reader["datumProdaje"],
                     DatumCekiranja = (DateTime)reader["datumCekiranja"],
                     NacinPlacanja = (string)reader["nacinPlacanja"],
-                    // SQL FLOAT se u C# prevodi u double. 
-                    // Bezbednije je koristiti Convert nego (double) kasting.
+            
                     UkupanIznos = Convert.ToDouble(reader["ukupanIznos"]),
 
                     Prodavac = new Prodavac()
@@ -79,7 +75,7 @@ namespace Zajednicki.Domen
         public SqlParameter[] GetUpdateParameters()
         {
             return new SqlParameter[] {
-                new SqlParameter("@idRacun", IdRacun),
+                new SqlParameter("@id", IdRacun),
                 new SqlParameter("@datumProdaje", DatumProdaje),
                 new SqlParameter("@datumCekiranja", DatumCekiranja),
                 new SqlParameter("@nacinPlacanja", NacinPlacanja),
