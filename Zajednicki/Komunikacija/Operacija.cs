@@ -2,20 +2,20 @@
 {
     public enum Operacija
     {
-        VratiSveProdavce,
-        VratiListuSvihKupaca,
-        VratiListuSvihKarata,
+        VratiSviProdavac,
+        VratiListuSviKupac,
+        VratiListuSviKarta,
         SacuvajRacun,
-        VratiRacunePoProdavcu,
+        VratiRacunPoProdavcu,
         VratiRacunPoId,
         AzurirajRacun,
-        SacuvajKupca,
+        SacuvajKupac,
         VratiKupcaPoId,
         VratiKupcePoNazivuMesta,
-        AzurirajKupca,
-        ObrisiKupca,
+        AzurirajKupac,
+        ObrisiKupac,
         Login,
-        SacuvajStrucnuSpremu,
-        VratiSvaMesta
+        SacuvajStrucnaSprema,
+        VratiListuSviMesto
     }
 }
