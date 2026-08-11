@@ -20,10 +20,11 @@ namespace SistemskeOperacije
         {
             int idRacuna = broker.AddWithId(racun);
             racun.IdRacun = idRacuna;
-
+            int rb = 1;
             foreach (var stavka in racun.Stavke)
             {
                 stavka.Racun = racun;
+                stavka.Rb = rb++;
                 broker.Add(stavka);
             }
         }

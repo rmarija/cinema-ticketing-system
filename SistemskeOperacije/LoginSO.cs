@@ -12,7 +12,7 @@ namespace SistemskeOperacije
     {
         private string username;
         private string password;
-        public Prodavac Result { get; set; }
+        public bool Result { get; set; }
 
         public LoginSO(string username, string password)
         {
@@ -23,19 +23,9 @@ namespace SistemskeOperacije
         protected override void ExecuteConcreteOperation()
         {
             string query = $"SELECT * FROM Prodavac WHERE username = '{username}' AND password = '{password}'";
-
             Prodavac p = new Prodavac();
-
             List<IEntity> result = broker.GetByQuery(p, query);
-
-            if (result.Count > 0)
-            {
-                Result = (Prodavac)result[0];
-            }
-            else
-            {
-                Result = null;
-            }
+            Result = result.Count > 0;
         }
     }
 }

@@ -21,14 +21,14 @@ namespace SistemskeOperacije
         {
             string k = kriterijum.Replace("'", "''");
 
-            string query = $@"SELECT r.idRacun, r.datum, r.ukupnaCena,
-                                     p.idProdavac, p.ime, p.prezime,
-                                     k.idKupac, k.naziv as kupacNaziv
-                              FROM Racun r
-                              INNER JOIN Prodavac p ON r.idProdavac = p.idProdavac
-                              INNER JOIN Kupac k ON r.idKupac = k.idKupac
-                              WHERE p.ime LIKE '%{k}%' OR p.prezime LIKE '%{k}%' OR p.ime + ' ' + p.prezime LIKE '%{k}%'
-                              ORDER BY r.datum DESC";
+            string query = $@"SELECT r.idRacun, r.datumProdaje, r.datumCekiranja, r.ukupanIznos, r.nacinPlacanja,
+                 p.idProdavac, p.ime, p.prezime,
+                 k.idKupac, k.naziv as kupacNaziv
+          FROM Racun r
+          INNER JOIN Prodavac p ON r.idProdavac = p.idProdavac
+          INNER JOIN Kupac k ON r.idKupac = k.idKupac
+          WHERE p.ime LIKE '%{k}%' OR p.prezime LIKE '%{k}%' OR p.ime + ' ' + p.prezime LIKE '%{k}%'
+          ORDER BY r.datumProdaje DESC";
 
             Racun racunModel = new Racun();
             List<IEntity> result = broker.GetByQuery(racunModel, query);
@@ -37,14 +37,17 @@ namespace SistemskeOperacije
 
             foreach (var racun in racuni)
             {
-                string queryStavke = $@"SELECT sr.rb, sr.kolicina, sr.cena, sr.iznos,
-                                             ka.idKarta, ka.naziv as kartaNaziv
-                                      FROM StavkaRacuna sr
-                                      INNER JOIN Karta ka ON sr.idKarta = ka.idKarta
-                                      WHERE sr.idRacun = {racun.IdRacun}";
+                string queryStavke = $@"SELECT sr.idRacun, sr.rb, sr.kolicina, sr.cena, sr.iznos,
+                     ka.idKarta, ka.nazivFilma as kartaNaziv, ka.sala as kartaSala, 
+                     ka.datumVremeProjekcije as kartaDatum, ka.cena as kartaCena
+              FROM StavkaRacuna sr
+              INNER JOIN Karta ka ON sr.idKarta = ka.idKarta
+              WHERE sr.idRacun = {racun.IdRacun}";
 
                 StavkaRacuna stavkaModel = new StavkaRacuna();
+
                 List<IEntity> stavkeResult = broker.GetByQuery(stavkaModel, queryStavke);
+
                 racun.Stavke = stavkeResult.Cast<StavkaRacuna>().ToList();
             }
 

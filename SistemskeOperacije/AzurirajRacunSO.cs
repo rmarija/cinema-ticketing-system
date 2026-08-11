@@ -19,13 +19,13 @@ namespace SistemskeOperacije
         protected override void ExecuteConcreteOperation()
         {
             broker.Update(racun);
-
             string deleteQuery = $"delete from StavkaRacuna where idRacun = {racun.IdRacun}";
             broker.GetByQuery(new StavkaRacuna(), deleteQuery);
-
+            int rb = 1;
             foreach (var stavka in racun.Stavke)
             {
                 stavka.Racun = racun;
+                stavka.Rb = rb++;
                 broker.Add(stavka);
             }
         }

@@ -45,7 +45,7 @@
             // 
             // btnStop
             // 
-            btnStop.Location = new Point(250, 90);
+            btnStop.Location = new Point(252, 90);
             btnStop.Name = "btnStop";
             btnStop.Size = new Size(123, 44);
             btnStop.TabIndex = 1;
@@ -56,7 +56,7 @@
             // lblText
             // 
             lblText.AutoSize = true;
-            lblText.Location = new Point(186, 167);
+            lblText.Location = new Point(154, 167);
             lblText.Name = "lblText";
             lblText.Size = new Size(31, 15);
             lblText.TabIndex = 2;

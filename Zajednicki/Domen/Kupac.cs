@@ -46,8 +46,13 @@ namespace Zajednicki.Domen
                     Naziv = (string)reader["naziv"],
                     Email = (string)reader["email"],
                     Telefon = (string)reader["telefon"],
-                    
-                    Mesto = new Mesto { IdMesto = (int)reader["idMesto"] }
+
+                    Mesto = new Mesto
+                    {
+                        IdMesto = (int)reader["idMesto"],
+                        Naziv = reader["mestoNaziv"] as string,
+                        PostanskiBroj = reader["postanskiBroj"] as string
+                    }
                 };
                 kupci.Add(k);
             }
@@ -67,7 +72,7 @@ namespace Zajednicki.Domen
 
         public override string ToString()
         {
-            return $"{Naziv} ({Email})";
+            return $"{Naziv}";
         }
     }
 }

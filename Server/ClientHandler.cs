@@ -100,6 +100,9 @@ namespace Server
                     case Operacija.VratiListuSviMesto:
                         odgovor.Objekat = Kontroler.Instance.VratiListuSviMesto();
                         break;
+                    case Operacija.VratiKupcePoNazivuMesta:
+                        odgovor.Objekat = Kontroler.Instance.VratiKupcePoNazivuMesta(serializer.ReadType<string>(zahtev.Objekat));
+                        break;
                 }
             }
             catch (Exception ex)

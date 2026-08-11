@@ -86,7 +86,7 @@ namespace Server
             so.ExecuteTemplate();
         }
 
-        internal Prodavac Login(string username, string password)
+        internal bool Login(string username, string password)
         {
             LoginSO so = new LoginSO(username, password);
             so.ExecuteTemplate();
@@ -102,6 +102,13 @@ namespace Server
         internal List<Mesto> VratiListuSviMesto()
         {
             VratiListuSviMestoSO so = new VratiListuSviMestoSO();
+            so.ExecuteTemplate();
+            return so.Result;
+        }
+
+        internal List<Kupac> VratiKupcePoNazivuMesta(string kriterijum)
+        {
+            VratiKupcePoNazivuMestaSO so = new VratiKupcePoNazivuMestaSO(kriterijum);
             so.ExecuteTemplate();
             return so.Result;
         }

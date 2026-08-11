@@ -60,11 +60,14 @@ namespace Zajednicki.Domen
 
                     Prodavac = new Prodavac()
                     {
-                        IdProdavac = (int)reader["idProdavac"]
+                        IdProdavac = (int)reader["idProdavac"],
+                        Ime = reader["ime"] as string,
+                        Prezime = reader["prezime"] as string
                     },
                     Kupac = new Kupac()
                     {
-                        IdKupac = (int)reader["idKupac"]
+                        IdKupac = (int)reader["idKupac"],
+                        Naziv = reader["kupacNaziv"] as string
                     }
                 };
                 racuni.Add(r);

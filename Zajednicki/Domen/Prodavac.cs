@@ -43,7 +43,6 @@ namespace Zajednicki.Domen
             {
                 Prodavac p = new Prodavac
                 {
-                    // Ovde koristimo tačna imena kolona iz tvog skrinšota
                     IdProdavac = (int)reader["idProdavac"],
                     Ime = (string)reader["ime"],
                     Prezime = (string)reader["prezime"],

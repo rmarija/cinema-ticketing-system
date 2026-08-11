@@ -65,7 +65,13 @@ namespace Zajednicki.Domen
                    
                     Karta = new Karta()
                     {
-                        IdKarta = (int)reader["idKarta"]
+
+                        IdKarta = (int)reader["idKarta"],
+                        NazivFilma = reader["kartaNaziv"] as string,
+                        Sala = reader["kartaSala"] as string,
+                        DatumVremeProjekcije = (DateTime)reader["kartaDatum"],
+                        Cena = Convert.ToDouble(reader["kartaCena"])
+
                     }
                 };
 
