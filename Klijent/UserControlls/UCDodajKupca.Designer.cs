@@ -47,7 +47,7 @@
             // lblNaziv
             // 
             lblNaziv.AutoSize = true;
-            lblNaziv.Location = new Point(63, 103);
+            lblNaziv.Location = new Point(144, 185);
             lblNaziv.Name = "lblNaziv";
             lblNaziv.Size = new Size(78, 15);
             lblNaziv.TabIndex = 0;
@@ -56,7 +56,7 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(41, 139);
+            label1.Location = new Point(122, 221);
             label1.Name = "label1";
             label1.Size = new Size(0, 15);
             label1.TabIndex = 1;
@@ -64,16 +64,16 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(41, 30);
+            label2.Location = new Point(144, 94);
             label2.Name = "label2";
-            label2.Size = new Size(40, 15);
+            label2.Size = new Size(89, 15);
             label2.TabIndex = 2;
-            label2.Text = "Kupac";
+            label2.Text = "Podaci o kupcu";
             // 
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(63, 158);
+            label3.Location = new Point(144, 240);
             label3.Name = "label3";
             label3.Size = new Size(36, 15);
             label3.TabIndex = 3;
@@ -82,7 +82,7 @@
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(63, 215);
+            label4.Location = new Point(144, 297);
             label4.Name = "label4";
             label4.Size = new Size(46, 15);
             label4.TabIndex = 4;
@@ -91,16 +91,16 @@
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(404, 30);
+            label5.Location = new Point(507, 94);
             label5.Name = "label5";
-            label5.Size = new Size(40, 15);
+            label5.Size = new Size(113, 15);
             label5.TabIndex = 5;
-            label5.Text = "Mesto";
+            label5.Text = "Informacije o mestu";
             // 
             // label6
             // 
             label6.AutoSize = true;
-            label6.Location = new Point(451, 103);
+            label6.Location = new Point(507, 207);
             label6.Name = "label6";
             label6.Size = new Size(36, 15);
             label6.TabIndex = 6;
@@ -109,7 +109,7 @@
             // label7
             // 
             label7.AutoSize = true;
-            label7.Location = new Point(451, 158);
+            label7.Location = new Point(507, 267);
             label7.Name = "label7";
             label7.Size = new Size(81, 15);
             label7.TabIndex = 7;
@@ -117,49 +117,49 @@
             // 
             // txtIme
             // 
-            txtIme.Location = new Point(157, 95);
+            txtIme.Location = new Point(238, 177);
             txtIme.Name = "txtIme";
             txtIme.Size = new Size(139, 23);
             txtIme.TabIndex = 8;
             // 
             // txtEmail
             // 
-            txtEmail.Location = new Point(157, 150);
+            txtEmail.Location = new Point(238, 232);
             txtEmail.Name = "txtEmail";
             txtEmail.Size = new Size(139, 23);
             txtEmail.TabIndex = 9;
             // 
             // txtTelefon
             // 
-            txtTelefon.Location = new Point(157, 207);
+            txtTelefon.Location = new Point(238, 289);
             txtTelefon.Name = "txtTelefon";
             txtTelefon.Size = new Size(139, 23);
             txtTelefon.TabIndex = 10;
             // 
             // txtNaziv
             // 
-            txtNaziv.Location = new Point(570, 95);
+            txtNaziv.Location = new Point(651, 199);
             txtNaziv.Name = "txtNaziv";
             txtNaziv.Size = new Size(139, 23);
             txtNaziv.TabIndex = 11;
             // 
             // txtPostanski
             // 
-            txtPostanski.Location = new Point(570, 150);
+            txtPostanski.Location = new Point(651, 259);
             txtPostanski.Name = "txtPostanski";
             txtPostanski.Size = new Size(139, 23);
             txtPostanski.TabIndex = 12;
             // 
             // btnSacuvaj
             // 
-            btnSacuvaj.Location = new Point(217, 320);
+            btnSacuvaj.Location = new Point(211, 410);
             btnSacuvaj.Name = "btnSacuvaj";
-            btnSacuvaj.Size = new Size(341, 23);
+            btnSacuvaj.Size = new Size(553, 31);
             btnSacuvaj.TabIndex = 13;
             btnSacuvaj.Text = "Sacuvaj";
             btnSacuvaj.UseVisualStyleBackColor = true;
             // 
-            // UCDodaKupca
+            // UCDodajKupca
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -177,8 +177,9 @@
             Controls.Add(label2);
             Controls.Add(label1);
             Controls.Add(lblNaziv);
-            Name = "UCDodaKupca";
-            Size = new Size(800, 426);
+            Name = "UCDodajKupca";
+            Size = new Size(1000, 650);
+            Load += UCDodajKupca_Load;
             ResumeLayout(false);
             PerformLayout();
         }

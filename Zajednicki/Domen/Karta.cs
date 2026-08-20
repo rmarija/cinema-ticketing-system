@@ -68,7 +68,7 @@ namespace Zajednicki.Domen
 
         public override string ToString()
         {
-            return $"{NazivFilma} - Sala: {Sala} - {DatumVremeProjekcije.ToString("dd.MM.yyyy u HH:mm")} ({Cena} RSD)";
+            return $"{NazivFilma} - {Sala} - {DatumVremeProjekcije.ToString("dd.MM.yyyy u HH:mm")}";
         }
 
 

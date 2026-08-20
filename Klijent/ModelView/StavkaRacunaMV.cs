@@ -13,4 +13,6 @@ namespace Klijent.ModelView
         public double Cena { get; set; }
         public double Iznos { get; set; }
     }
+
+
 }

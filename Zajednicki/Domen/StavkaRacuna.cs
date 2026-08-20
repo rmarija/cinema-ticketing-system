@@ -27,8 +27,7 @@ namespace Zajednicki.Domen
         public override bool Equals(object? obj)
         {
             if (obj is StavkaRacuna stavka)
-                return Rb == stavka.Rb && Racun.IdRacun == stavka.Racun.IdRacun;
-
+                return Rb == stavka.Rb && Racun?.IdRacun == stavka.Racun?.IdRacun;
             return false;
         }
 

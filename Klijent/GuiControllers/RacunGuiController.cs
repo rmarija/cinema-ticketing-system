@@ -3,6 +3,7 @@ using Klijent.UserControlls;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using Zajednicki.Domen;
@@ -30,8 +31,6 @@ namespace Klijent.GuiControllers
             public Racun Racun { get; set; }
             public List<StavkaRacuna> Stavke { get; set; }
         }
-
-
 
         internal Control KreirajRacun()
         {
@@ -62,17 +61,17 @@ namespace Klijent.GuiControllers
                 ucDodajRacun.cbProjekcija.DataSource = Komunikacija.Instance.VratiListuSviKarta();
                 ucDodajRacun.cbProjekcija.SelectedIndex = -1;
 
-                ucDodajRacun.txtCena.ReadOnly = true;
                 ucDodajRacun.btnObrisi.Enabled = false;
                 ucDodajRacun.cbNacinPlacanja.SelectedIndex = -1;
                 ucDodajRacun.dtpDatumProdaje.Value = DateTime.Now;
                 ucDodajRacun.dtpDatumCekiranja.Value = DateTime.Now;
+                ucDodajRacun.lblCena.Text = "0.00 RSD";
 
                 OsveziTabeluKreiraj();
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Greška pri učitavanju podataka: " + ex.Message);
+                MessageBox.Show("Sistem ne može da kreira račun!");
             }
         }
 
@@ -80,7 +79,7 @@ namespace Klijent.GuiControllers
         {
             if (sender is ComboBox cb && cb.SelectedItem is Karta izabranaKarta)
             {
-                if (cb.Parent is UCDodajRacun) ucDodajRacun.txtCena.Text = izabranaKarta.Cena.ToString("N2");
+                if (cb.Parent is UCDodajRacun) ucDodajRacun.lblCena.Text = izabranaKarta.Cena.ToString("N2") + " RSD";
             }
         }
 
@@ -102,8 +101,8 @@ namespace Klijent.GuiControllers
 
             OsveziTabeluKreiraj();
             ucDodajRacun.cbProjekcija.SelectedIndex = -1;
-            ucDodajRacun.txtCena.Clear();
             ucDodajRacun.numKolicina.Value = 1;
+            ucDodajRacun.lblCena.Text = "0.00 RSD";
         }
 
         private void ObrisiStavku(object sender, EventArgs e)
@@ -130,18 +129,31 @@ namespace Klijent.GuiControllers
 
             if (ucDodajRacun.dgvStavke.Columns.Count > 0)
             {
+                ucDodajRacun.dgvStavke.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+
+                if (ucDodajRacun.dgvStavke.Columns["Projekcija"] != null)
+                    ucDodajRacun.dgvStavke.Columns["Projekcija"].FillWeight = 200; // veća širina
+
+                if (ucDodajRacun.dgvStavke.Columns["Kolicina"] != null)
+                    ucDodajRacun.dgvStavke.Columns["Kolicina"].FillWeight = 60;
+
                 if (ucDodajRacun.dgvStavke.Columns["Cena"] != null)
+                {
+                    ucDodajRacun.dgvStavke.Columns["Cena"].FillWeight = 80;
                     ucDodajRacun.dgvStavke.Columns["Cena"].DefaultCellStyle.Format = "N2";
+                }
 
                 if (ucDodajRacun.dgvStavke.Columns["Iznos"] != null)
+                {
+                    ucDodajRacun.dgvStavke.Columns["Iznos"].FillWeight = 80;
                     ucDodajRacun.dgvStavke.Columns["Iznos"].DefaultCellStyle.Format = "N2";
+                }
             }
 
             double ukupanIznos = stavkeRacuna.Sum(s => s.Kolicina * s.Cena);
             ucDodajRacun.lblUkupanIznos.Text = $"{ukupanIznos:N2} RSD";
             ucDodajRacun.btnObrisi.Enabled = stavkeRacuna.Count > 0;
         }
-
 
         private void AzurirajPreview(object sender, EventArgs e)
         {
@@ -159,12 +171,29 @@ namespace Klijent.GuiControllers
 
         private void SacuvajRacun(object sender, EventArgs e)
         {
-
             if (ucDodajRacun.cbKupac.SelectedIndex == -1 || ucDodajRacun.cbProdavac.SelectedIndex == -1
-                       || ucDodajRacun.cbNacinPlacanja.SelectedIndex == -1 || stavkeRacuna.Count == 0)
+               || ucDodajRacun.cbNacinPlacanja.SelectedIndex == -1 || stavkeRacuna.Count == 0)
             {
                 MessageBox.Show("Popunite sva polja i unesite bar jednu stavku!");
                 return;
+            }
+
+            DateTime datumProdaje = ucDodajRacun.dtpDatumProdaje.Value;
+            DateTime datumCekiranja = ucDodajRacun.dtpDatumCekiranja.Value;
+
+            if (datumCekiranja < datumProdaje)
+            {
+                MessageBox.Show("Datum čekiranja mora biti veći ili jednak datumu prodaje!");
+                return;
+            }
+
+            foreach (var stavka in stavkeRacuna)
+            {
+                if (datumProdaje > stavka.Karta.DatumVremeProjekcije)
+                {
+                    MessageBox.Show($"Datum prodaje ne može biti nakon datuma projekcije za film {stavka.Karta.NazivFilma}!");
+                    return;
+                }
             }
 
             Racun racun = new Racun
@@ -176,7 +205,6 @@ namespace Klijent.GuiControllers
                 Stavke = new List<StavkaRacuna>(stavkeRacuna),
                 UkupanIznos = stavkeRacuna.Sum(s => s.Kolicina * s.Cena),
                 NacinPlacanja = ucDodajRacun.cbNacinPlacanja.SelectedItem?.ToString()
-
             };
 
             try
@@ -187,14 +215,14 @@ namespace Klijent.GuiControllers
                 OsveziTabeluKreiraj();
                 ucDodajRacun.cbKupac.SelectedIndex = -1;
                 ucDodajRacun.cbProjekcija.SelectedIndex = -1;
+                ucDodajRacun.lblCena.Text = "0.00 RSD";
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Greška: " + ex.Message);
+                System.Diagnostics.Debug.WriteLine("Greška: " + ex.Message);
+                MessageBox.Show("Sistem ne može da zapamti račun!");
             }
         }
-
-       
 
         internal Control PretraziRacun()
         {
@@ -204,6 +232,7 @@ namespace Klijent.GuiControllers
             ucPretraga.dgvPretrazi.AllowUserToAddRows = false;
             ucPretraga.dgvPretrazi.ReadOnly = true;
             ucPretraga.dgvPretrazi.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            ucPretraga.dgvPretrazi.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
 
             ucPretraga.txtPretrazi.TextChanged += (sender, e) =>
             {
@@ -253,6 +282,10 @@ namespace Klijent.GuiControllers
                 }).ToList();
 
                 ucPretraga.dgvPretrazi.DataSource = prikazRacuna;
+                RacunPretragaMV.PodesiKolone(ucPretraga.dgvPretrazi);
+
+
+                ucPretraga.dgvPretrazi.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             }
             catch (Exception ex)
             {
@@ -261,9 +294,9 @@ namespace Klijent.GuiControllers
         }
 
 
-
         private void PrikaziDetaljeRacuna(int idRacun)
         {
+
             try
             {
                 Racun racun = Komunikacija.Instance.VratiRacunPoId(idRacun);
@@ -271,6 +304,10 @@ namespace Klijent.GuiControllers
                 {
                     UCPrikaziRacun ucPrikaz = PopuniPodatke(racun);
                     MainCoordinator.Instance.ShowPanel(ucPrikaz);
+                }
+                else
+                {
+                    MessageBox.Show("Sistem ne može da nađe račun!");
                 }
             }
             catch (Exception ex)
@@ -283,6 +320,7 @@ namespace Klijent.GuiControllers
         {
             UCPrikaziRacun ucPrikaz = new UCPrikaziRacun();
             List<StavkaRacuna> stavkeIzmena = new List<StavkaRacuna>(racun.Stavke);
+            StavkaRacuna stavkaZaIzmenu = null;
 
             try
             {
@@ -301,7 +339,6 @@ namespace Klijent.GuiControllers
             ucPrikaz.dtpDatumProdaje.Value = racun.DatumProdaje;
             ucPrikaz.dtpDatumCekiranja.Value = racun.DatumCekiranja;
             ucPrikaz.cbProjekcija.SelectedIndex = -1;
-            ucPrikaz.txtCena.ReadOnly = true;
 
             void OsveziTabeluIzmena()
             {
@@ -314,9 +351,14 @@ namespace Klijent.GuiControllers
                     Iznos = s.Kolicina * s.Cena
                 }).ToList();
 
+                ucPrikaz.dgvStavke.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
                 double ukupno = stavkeIzmena.Sum(s => s.Kolicina * s.Cena);
                 ucPrikaz.lblUkupanIznos.Text = $"{ukupno:N2} RSD";
+                ucPrikaz.btnObrisi.Enabled = stavkeIzmena.Count > 0;
+
             }
+
+
 
             ucPrikaz.dgvStavke.CellClick += (s, e) =>
             {
@@ -326,6 +368,7 @@ namespace Klijent.GuiControllers
                     StavkaRacuna stavka = stavkeIzmena.FirstOrDefault(st => st.Karta.ToString() == red.Projekcija);
                     if (stavka != null)
                     {
+                        stavkaZaIzmenu = stavka;
                         foreach (Karta k in ucPrikaz.cbProjekcija.Items)
                             if (k.IdKarta == stavka.Karta.IdKarta) { ucPrikaz.cbProjekcija.SelectedItem = k; break; }
 
@@ -337,63 +380,101 @@ namespace Klijent.GuiControllers
             void AzurirajPreviewIzmena()
             {
                 double zbirDodatih = stavkeIzmena.Sum(s => s.Kolicina * s.Cena);
-                double previewIznos = 0;
 
                 if (ucPrikaz.cbProjekcija.SelectedItem is Karta izabranaKarta)
                 {
                     int kolicina = (int)ucPrikaz.numKolicina.Value;
-                    previewIznos = izabranaKarta.Cena * kolicina;
+                    double previewIznos = izabranaKarta.Cena * kolicina;
+
+                    StavkaRacuna postojeca = stavkeIzmena.FirstOrDefault(st => st.Karta.IdKarta == izabranaKarta.IdKarta);
+                    if (postojeca != null)
+                        zbirDodatih -= postojeca.Kolicina * postojeca.Cena;   
+
+                    zbirDodatih += previewIznos;                
                 }
 
-                ucPrikaz.lblUkupanIznos.Text = $"{(zbirDodatih + previewIznos):N2} RSD";
+                ucPrikaz.lblUkupanIznos.Text = $"{zbirDodatih:N2} RSD";
             }
+
+            void PrimeniIzmenuStavke()
+            {
+                if (!(ucPrikaz.cbProjekcija.SelectedItem is Karta izabranaKarta)) return;
+
+                int kolicina = (int)ucPrikaz.numKolicina.Value;
+                double cena = izabranaKarta.Cena;
+
+
+                if (stavkaZaIzmenu != null && stavkaZaIzmenu.Karta.IdKarta != izabranaKarta.IdKarta)
+                {
+                    int indeksZaUklanjanje = stavkeIzmena.FindIndex(st => ReferenceEquals(st, stavkaZaIzmenu));
+                    if (indeksZaUklanjanje >= 0) stavkeIzmena.RemoveAt(indeksZaUklanjanje);
+                }
+
+                StavkaRacuna postojeca = stavkeIzmena.FirstOrDefault(st => st.Karta.IdKarta == izabranaKarta.IdKarta);
+                if (postojeca != null) postojeca.Kolicina = kolicina;
+                else stavkeIzmena.Add(new StavkaRacuna { Karta = izabranaKarta, Kolicina = kolicina, Cena = cena });
+
+                stavkaZaIzmenu = null;  
+
+                OsveziTabeluIzmena();
+                ucPrikaz.cbProjekcija.SelectedIndex = -1;
+                ucPrikaz.lblCena.Text = "0.00 RSD";
+                ucPrikaz.numKolicina.Value = 1;
+            }
+
+
 
             OsveziTabeluIzmena();
 
             ucPrikaz.cbProjekcija.SelectedIndexChanged += (s, e) =>
             {
                 if (ucPrikaz.cbProjekcija.SelectedItem is Karta izabranaKarta)
-                    ucPrikaz.txtCena.Text = izabranaKarta.Cena.ToString("N2");
+                    ucPrikaz.lblCena.Text = izabranaKarta.Cena.ToString("N2") + " RSD";
+                ucPrikaz.numKolicina.Value = 1;
                 AzurirajPreviewIzmena();
             };
 
             ucPrikaz.numKolicina.ValueChanged += (s, e) => AzurirajPreviewIzmena();
 
-            ucPrikaz.btnDodaj.Click += (s, e) =>
+            ucPrikaz.btnDodaj.Click += (s, e) => PrimeniIzmenuStavke();
+
+            ucPrikaz.btnObrisi.Click += (s, e) =>
             {
-                if (ucPrikaz.cbProjekcija.SelectedIndex == -1) return;
+                if (ucPrikaz.dgvStavke.SelectedRows.Count == 0) return;
 
-                Karta izabranaKarta = (Karta)ucPrikaz.cbProjekcija.SelectedItem;
-                int kolicina = (int)ucPrikaz.numKolicina.Value;
-                double cena = izabranaKarta.Cena;
-
-                StavkaRacuna postojeca = stavkeIzmena.FirstOrDefault(st => st.Karta.IdKarta == izabranaKarta.IdKarta);
-                if (postojeca != null) postojeca.Kolicina = kolicina;
-                else stavkeIzmena.Add(new StavkaRacuna { Karta = izabranaKarta, Kolicina = kolicina, Cena = cena });
-
+                int index = ucPrikaz.dgvStavke.SelectedRows[0].Index;
+                stavkeIzmena.RemoveAt(index);
+                stavkaZaIzmenu = null;
                 OsveziTabeluIzmena();
+
                 ucPrikaz.cbProjekcija.SelectedIndex = -1;
-                ucPrikaz.txtCena.Clear();
-                ucPrikaz.numKolicina.Value = 1;
+                ucPrikaz.lblCena.Text = "0.00 RSD";
             };
+
 
             OmoguciIzmenu(ucPrikaz, false);
             ucPrikaz.Tag = new TagPodaci { Racun = racun, Stavke = stavkeIzmena };
 
             ucPrikaz.btnIzmeni.Click += (s, e) => OmoguciIzmenu(ucPrikaz, true);
-            ucPrikaz.btnSacuvaj.Click += (s, e) => SacuvajIzmene(ucPrikaz);
+            ucPrikaz.btnSacuvaj.Click += (s, e) =>
+            {
+                PrimeniIzmenuStavke();
+                SacuvajIzmene(ucPrikaz);
+            };
 
             return ucPrikaz;
         }
+
         private void OmoguciIzmenu(UCPrikaziRacun ucPrikaz, bool omoguceno)
         {
-            ucPrikaz.dtpDatumProdaje.Enabled = omoguceno;
+          //  ucPrikaz.dtpDatumProdaje.Enabled = omoguceno;
             ucPrikaz.dtpDatumCekiranja.Enabled = omoguceno;
             ucPrikaz.cbKupac.Enabled = omoguceno;
-            ucPrikaz.cbProdavac.Enabled = omoguceno;
+           // ucPrikaz.cbProdavac.Enabled = omoguceno;
             ucPrikaz.cbProjekcija.Enabled = omoguceno;
             ucPrikaz.numKolicina.Enabled = omoguceno;
-            ucPrikaz.txtCena.ReadOnly = true;
+            ucPrikaz.cbNacinPlacanja.Enabled = omoguceno;
+            ucPrikaz.btnObrisi.Visible = omoguceno;
 
             ucPrikaz.btnDodaj.Visible = omoguceno;
             ucPrikaz.btnIzmeni.Visible = !omoguceno;
@@ -414,9 +495,8 @@ namespace Klijent.GuiControllers
                 DatumCekiranja = ucPrikaz.dtpDatumCekiranja.Value,
                 Kupac = (Kupac)ucPrikaz.cbKupac.SelectedItem,
                 Prodavac = (Prodavac)ucPrikaz.cbProdavac.SelectedItem,
-                NacinPlacanja = original.NacinPlacanja,
+                NacinPlacanja = ucPrikaz.cbNacinPlacanja.SelectedItem?.ToString() ?? original.NacinPlacanja,
                 UkupanIznos = podaci.Stavke.Sum(s => s.Kolicina * s.Cena),
-
                 Stavke = podaci.Stavke
             };
 

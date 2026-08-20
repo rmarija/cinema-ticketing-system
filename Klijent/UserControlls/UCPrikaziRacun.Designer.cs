@@ -35,7 +35,6 @@
             label7 = new Label();
             label6 = new Label();
             numKolicina = new NumericUpDown();
-            txtCena = new TextBox();
             label5 = new Label();
             cbProjekcija = new ComboBox();
             label4 = new Label();
@@ -51,13 +50,15 @@
             btnIzmeni = new Button();
             label8 = new Label();
             cbNacinPlacanja = new ComboBox();
+            lblCena = new Label();
+            btnObrisi = new Button();
             ((System.ComponentModel.ISupportInitialize)dgvStavke).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numKolicina).BeginInit();
             SuspendLayout();
             // 
             // btnSacuvaj
             // 
-            btnSacuvaj.Location = new Point(712, 361);
+            btnSacuvaj.Location = new Point(889, 341);
             btnSacuvaj.Name = "btnSacuvaj";
             btnSacuvaj.Size = new Size(75, 23);
             btnSacuvaj.TabIndex = 42;
@@ -69,18 +70,18 @@
             dgvStavke.AllowUserToAddRows = false;
             dgvStavke.AllowUserToDeleteRows = false;
             dgvStavke.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvStavke.Location = new Point(393, 173);
+            dgvStavke.Location = new Point(398, 142);
             dgvStavke.Name = "dgvStavke";
             dgvStavke.ReadOnly = true;
             dgvStavke.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvStavke.Size = new Size(647, 182);
+            dgvStavke.Size = new Size(566, 188);
             dgvStavke.TabIndex = 40;
             // 
             // btnDodaj
             // 
-            btnDodaj.Location = new Point(56, 361);
+            btnDodaj.Location = new Point(20, 395);
             btnDodaj.Name = "btnDodaj";
-            btnDodaj.Size = new Size(237, 23);
+            btnDodaj.Size = new Size(346, 23);
             btnDodaj.TabIndex = 39;
             btnDodaj.Text = "Dodaj";
             btnDodaj.UseVisualStyleBackColor = true;
@@ -88,7 +89,7 @@
             // lblUkupanIznos
             // 
             lblUkupanIznos.AutoSize = true;
-            lblUkupanIznos.Location = new Point(241, 317);
+            lblUkupanIznos.Location = new Point(314, 345);
             lblUkupanIznos.Name = "lblUkupanIznos";
             lblUkupanIznos.Size = new Size(52, 15);
             lblUkupanIznos.TabIndex = 38;
@@ -97,7 +98,7 @@
             // label7
             // 
             label7.AutoSize = true;
-            label7.Location = new Point(56, 317);
+            label7.Location = new Point(22, 345);
             label7.Name = "label7";
             label7.Size = new Size(78, 15);
             label7.TabIndex = 37;
@@ -106,7 +107,7 @@
             // label6
             // 
             label6.AutoSize = true;
-            label6.Location = new Point(42, 211);
+            label6.Location = new Point(42, 253);
             label6.Name = "label6";
             label6.Size = new Size(49, 15);
             label6.TabIndex = 36;
@@ -115,24 +116,17 @@
             // 
             // numKolicina
             // 
-            numKolicina.Location = new Point(141, 203);
+            numKolicina.Location = new Point(179, 245);
             numKolicina.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
             numKolicina.Name = "numKolicina";
             numKolicina.Size = new Size(152, 23);
             numKolicina.TabIndex = 35;
             numKolicina.Value = new decimal(new int[] { 1, 0, 0, 0 });
             // 
-            // txtCena
-            // 
-            txtCena.Location = new Point(141, 241);
-            txtCena.Name = "txtCena";
-            txtCena.Size = new Size(152, 23);
-            txtCena.TabIndex = 34;
-            // 
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(42, 241);
+            label5.Location = new Point(42, 296);
             label5.Name = "label5";
             label5.Size = new Size(34, 15);
             label5.TabIndex = 33;
@@ -141,7 +135,7 @@
             // cbProjekcija
             // 
             cbProjekcija.FormattingEnabled = true;
-            cbProjekcija.Location = new Point(141, 173);
+            cbProjekcija.Location = new Point(179, 207);
             cbProjekcija.Name = "cbProjekcija";
             cbProjekcija.Size = new Size(152, 23);
             cbProjekcija.TabIndex = 32;
@@ -149,7 +143,7 @@
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(42, 176);
+            label4.Location = new Point(42, 215);
             label4.Name = "label4";
             label4.Size = new Size(58, 15);
             label4.TabIndex = 31;
@@ -158,7 +152,7 @@
             // Projekcija
             // 
             Projekcija.AutoSize = true;
-            Projekcija.Location = new Point(14, 140);
+            Projekcija.Location = new Point(20, 166);
             Projekcija.Name = "Projekcija";
             Projekcija.Size = new Size(80, 15);
             Projekcija.TabIndex = 30;
@@ -166,8 +160,9 @@
             // 
             // cbProdavac
             // 
+            cbProdavac.Enabled = false;
             cbProdavac.FormattingEnabled = true;
-            cbProdavac.Location = new Point(584, 83);
+            cbProdavac.Location = new Point(520, 63);
             cbProdavac.Name = "cbProdavac";
             cbProdavac.Size = new Size(152, 23);
             cbProdavac.TabIndex = 29;
@@ -175,7 +170,7 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(485, 91);
+            label3.Location = new Point(432, 71);
             label3.Name = "label3";
             label3.Size = new Size(56, 15);
             label3.TabIndex = 28;
@@ -184,7 +179,7 @@
             // lbl
             // 
             lbl.AutoSize = true;
-            lbl.Location = new Point(485, 46);
+            lbl.Location = new Point(432, 30);
             lbl.Name = "lbl";
             lbl.Size = new Size(40, 15);
             lbl.TabIndex = 27;
@@ -193,14 +188,14 @@
             // cbKupac
             // 
             cbKupac.FormattingEnabled = true;
-            cbKupac.Location = new Point(584, 43);
+            cbKupac.Location = new Point(520, 22);
             cbKupac.Name = "cbKupac";
             cbKupac.Size = new Size(152, 23);
             cbKupac.TabIndex = 26;
             // 
             // dtpDatumCekiranja
             // 
-            dtpDatumCekiranja.Location = new Point(180, 83);
+            dtpDatumCekiranja.Location = new Point(179, 65);
             dtpDatumCekiranja.Name = "dtpDatumCekiranja";
             dtpDatumCekiranja.Size = new Size(200, 23);
             dtpDatumCekiranja.TabIndex = 25;
@@ -208,7 +203,7 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(56, 86);
+            label2.Location = new Point(56, 66);
             label2.Name = "label2";
             label2.Size = new Size(93, 15);
             label2.TabIndex = 24;
@@ -217,7 +212,7 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(56, 46);
+            label1.Location = new Point(56, 25);
             label1.Name = "label1";
             label1.Size = new Size(86, 15);
             label1.TabIndex = 23;
@@ -225,14 +220,15 @@
             // 
             // dtpDatumProdaje
             // 
-            dtpDatumProdaje.Location = new Point(180, 43);
+            dtpDatumProdaje.Enabled = false;
+            dtpDatumProdaje.Location = new Point(179, 24);
             dtpDatumProdaje.Name = "dtpDatumProdaje";
             dtpDatumProdaje.Size = new Size(201, 23);
             dtpDatumProdaje.TabIndex = 22;
             // 
             // btnIzmeni
             // 
-            btnIzmeni.Location = new Point(611, 361);
+            btnIzmeni.Location = new Point(889, 366);
             btnIzmeni.Name = "btnIzmeni";
             btnIzmeni.Size = new Size(75, 23);
             btnIzmeni.TabIndex = 43;
@@ -242,7 +238,7 @@
             // label8
             // 
             label8.AutoSize = true;
-            label8.Location = new Point(42, 270);
+            label8.Location = new Point(56, 107);
             label8.Name = "label8";
             label8.Size = new Size(85, 15);
             label8.TabIndex = 45;
@@ -252,15 +248,35 @@
             // 
             cbNacinPlacanja.FormattingEnabled = true;
             cbNacinPlacanja.Items.AddRange(new object[] { "Gotovina", "Kartica" });
-            cbNacinPlacanja.Location = new Point(141, 267);
+            cbNacinPlacanja.Location = new Point(179, 104);
             cbNacinPlacanja.Name = "cbNacinPlacanja";
-            cbNacinPlacanja.Size = new Size(152, 23);
+            cbNacinPlacanja.Size = new Size(200, 23);
             cbNacinPlacanja.TabIndex = 44;
+            // 
+            // lblCena
+            // 
+            lblCena.AutoSize = true;
+            lblCena.Location = new Point(279, 296);
+            lblCena.Name = "lblCena";
+            lblCena.Size = new Size(52, 15);
+            lblCena.TabIndex = 46;
+            lblCena.Text = "0.00 RSD";
+            // 
+            // btnObrisi
+            // 
+            btnObrisi.Location = new Point(889, 395);
+            btnObrisi.Name = "btnObrisi";
+            btnObrisi.Size = new Size(75, 23);
+            btnObrisi.TabIndex = 47;
+            btnObrisi.Text = "Obrisi";
+            btnObrisi.UseVisualStyleBackColor = true;
             // 
             // UCPrikaziRacun
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(btnObrisi);
+            Controls.Add(lblCena);
             Controls.Add(label8);
             Controls.Add(cbNacinPlacanja);
             Controls.Add(btnIzmeni);
@@ -271,7 +287,6 @@
             Controls.Add(label7);
             Controls.Add(label6);
             Controls.Add(numKolicina);
-            Controls.Add(txtCena);
             Controls.Add(label5);
             Controls.Add(cbProjekcija);
             Controls.Add(label4);
@@ -285,7 +300,7 @@
             Controls.Add(label1);
             Controls.Add(dtpDatumProdaje);
             Name = "UCPrikaziRacun";
-            Size = new Size(1085, 505);
+            Size = new Size(1048, 454);
             ((System.ComponentModel.ISupportInitialize)dgvStavke).EndInit();
             ((System.ComponentModel.ISupportInitialize)numKolicina).EndInit();
             ResumeLayout(false);
@@ -301,7 +316,6 @@
         private Label label7;
         private Label label6;
         public NumericUpDown numKolicina;
-        public TextBox txtCena;
         private Label label5;
         public ComboBox cbProjekcija;
         private Label label4;
@@ -317,5 +331,7 @@
         public Button btnIzmeni;
         private Label label8;
         public ComboBox cbNacinPlacanja;
+        public Label lblCena;
+        public Button btnObrisi;
     }
 }

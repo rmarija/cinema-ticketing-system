@@ -17,12 +17,16 @@ namespace Klijent
         {
             InitializeComponent();
             LoginGuiController.Instance.SrediFormu(this);
-            btnLogin.Click += btnLogin_Click;
         }
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
             LoginGuiController.Instance.PrijaviSe(txtUsername.Text.Trim(), txtPassword.Text.Trim());
+        }
+
+        private void FrmLogin_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

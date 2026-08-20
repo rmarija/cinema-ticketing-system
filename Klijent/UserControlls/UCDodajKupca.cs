@@ -16,5 +16,10 @@ namespace Klijent.UserControlls
         {
             InitializeComponent();
         }
+
+        private void UCDodajKupca_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

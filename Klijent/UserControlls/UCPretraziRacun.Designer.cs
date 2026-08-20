@@ -45,6 +45,7 @@
             // 
             // txtPretrazi
             // 
+            txtPretrazi.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right; 
             txtPretrazi.Location = new Point(399, 46);
             txtPretrazi.Name = "txtPretrazi";
             txtPretrazi.Size = new Size(312, 23);
@@ -54,6 +55,7 @@
             // 
             dgvPretrazi.AllowUserToAddRows = false;
             dgvPretrazi.AllowUserToDeleteRows = false;
+            dgvPretrazi.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left |AnchorStyles.Right;
             dgvPretrazi.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvPretrazi.Location = new Point(32, 114);
             dgvPretrazi.Name = "dgvPretrazi";

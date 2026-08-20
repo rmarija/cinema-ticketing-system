@@ -103,6 +103,10 @@ namespace Server
                     case Operacija.VratiKupcePoNazivuMesta:
                         odgovor.Objekat = Kontroler.Instance.VratiKupcePoNazivuMesta(serializer.ReadType<string>(zahtev.Objekat));
                         break;
+
+                    case Operacija.VratiKupcaPoId:
+                        odgovor.Objekat = Kontroler.Instance.VratiKupcaPoId(int.Parse(serializer.ReadType<string>(zahtev.Objekat)));
+                        break;
                 }
             }
             catch (Exception ex)

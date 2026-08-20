@@ -112,5 +112,12 @@ namespace Server
             so.ExecuteTemplate();
             return so.Result;
         }
+
+        internal Kupac VratiKupcaPoId(int idKupac)
+        {
+            VratiKupcaPoIdSO so = new VratiKupcaPoIdSO(idKupac);
+            so.ExecuteTemplate();
+            return so.Result;
+        }
     }
 }

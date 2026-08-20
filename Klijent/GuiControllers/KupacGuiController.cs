@@ -31,15 +31,11 @@ namespace Klijent.GuiControllers
         {
         }
 
-        // ==========================================================
-        // 1. KREIRANJE KUPCA (UCDodajKupca)
-        // ==========================================================
         internal Control KreirajKupca()
         {
             ucDodajKupca = new UCDodajKupca();
             errorProvider = new ErrorProvider();
 
-            // Povezivanje polja sa brisanjem grešaka (koristeći tvoje nazive)
             ucDodajKupca.txtIme.TextChanged += (s, e) => ObrisiGresku(ucDodajKupca.txtIme);
             ucDodajKupca.txtTelefon.TextChanged += (s, e) => ObrisiGresku(ucDodajKupca.txtTelefon);
             ucDodajKupca.txtEmail.TextChanged += (s, e) => ObrisiGresku(ucDodajKupca.txtEmail);
@@ -190,6 +186,8 @@ namespace Klijent.GuiControllers
             ucPretraga.dgvPretrazi.AllowUserToAddRows = false;
             ucPretraga.dgvPretrazi.ReadOnly = true;
             ucPretraga.dgvPretrazi.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            ucPretraga.dgvPretrazi.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill; 
+
 
             ucPretraga.txtPretrazi.TextChanged += (sender, e) =>
             {
@@ -245,7 +243,7 @@ namespace Klijent.GuiControllers
 
                 ucPretraga.dgvPretrazi.DataSource = prikazKupaca;
 
-                PodesiGridView(ucPretraga.dgvPretrazi);
+                KupacMV.PodesiKolone(ucPretraga.dgvPretrazi);
             }
             catch (Exception ex)
             {
@@ -253,46 +251,7 @@ namespace Klijent.GuiControllers
             }
         }
 
-        private void PodesiGridView(DataGridView dgvPretrazi)
-        {
-            if (dgvPretrazi.Columns.Count == 0) return;
-
-            if (dgvPretrazi.Columns["IdKupac"] != null)
-            {
-                dgvPretrazi.Columns["IdKupac"].Visible = false;
-            }
-
-            if (dgvPretrazi.Columns.Contains("Poruka"))
-            {
-                dgvPretrazi.Columns["Poruka"].HeaderText = "";
-                dgvPretrazi.Columns["Poruka"].Width = dgvPretrazi.Width - 10;
-                return;
-            }
-
-            if (dgvPretrazi.Columns["ImePrezime"] != null)
-            {
-                dgvPretrazi.Columns["ImePrezime"].HeaderText = "Ime i prezime";
-                dgvPretrazi.Columns["ImePrezime"].Width = 150;
-            }
-
-            if (dgvPretrazi.Columns["Telefon"] != null)
-            {
-                dgvPretrazi.Columns["Telefon"].HeaderText = "Telefon";
-                dgvPretrazi.Columns["Telefon"].Width = 120;
-            }
-
-            if (dgvPretrazi.Columns["Email"] != null)
-            {
-                dgvPretrazi.Columns["Email"].HeaderText = "Email";
-                dgvPretrazi.Columns["Email"].Width = 150;
-            }
-
-            if (dgvPretrazi.Columns["Mesto"] != null)
-            {
-                dgvPretrazi.Columns["Mesto"].HeaderText = "Mesto";
-                dgvPretrazi.Columns["Mesto"].Width = 150;
-            }
-        }
+   
 
 
         private void PrikaziDetaljeKupca(int idKupac)

@@ -21,5 +21,10 @@ namespace Klijent.UserControlls
         {
 
         }
+
+        private void txtCena_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

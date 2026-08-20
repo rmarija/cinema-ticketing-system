@@ -16,6 +16,7 @@
         ObrisiKupac,
         Login,
         SacuvajStrucnaSprema,
-        VratiListuSviMesto
+        VratiListuSviMesto,
+        
     }
 }

@@ -49,6 +49,8 @@
             txtPretrazi.Name = "txtPretrazi";
             txtPretrazi.Size = new Size(402, 23);
             txtPretrazi.TabIndex = 1;
+            txtPretrazi.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+
             // 
             // dgvPretrazi
             // 
@@ -61,6 +63,7 @@
             dgvPretrazi.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvPretrazi.Size = new Size(747, 259);
             dgvPretrazi.TabIndex = 2;
+            dgvPretrazi.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             // 
             // UCPretraziKupca
             // 

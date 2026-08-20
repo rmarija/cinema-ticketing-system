@@ -41,7 +41,6 @@
             cbProjekcija = new ComboBox();
             label5 = new Label();
             numKolicina = new NumericUpDown();
-            txtCena = new TextBox();
             label6 = new Label();
             label7 = new Label();
             lblUkupanIznos = new Label();
@@ -51,6 +50,7 @@
             btnSacuvaj = new Button();
             cbNacinPlacanja = new ComboBox();
             label8 = new Label();
+            lblCena = new Label();
             ((System.ComponentModel.ISupportInitialize)numKolicina).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dgvStavke).BeginInit();
             SuspendLayout();
@@ -90,7 +90,7 @@
             // cbKupac
             // 
             cbKupac.FormattingEnabled = true;
-            cbKupac.Location = new Point(573, 24);
+            cbKupac.Location = new Point(547, 21);
             cbKupac.Name = "cbKupac";
             cbKupac.Size = new Size(152, 23);
             cbKupac.TabIndex = 4;
@@ -98,7 +98,7 @@
             // lbl
             // 
             lbl.AutoSize = true;
-            lbl.Location = new Point(474, 27);
+            lbl.Location = new Point(437, 24);
             lbl.Name = "lbl";
             lbl.Size = new Size(40, 15);
             lbl.TabIndex = 5;
@@ -107,7 +107,7 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(474, 72);
+            label3.Location = new Point(437, 72);
             label3.Name = "label3";
             label3.Size = new Size(56, 15);
             label3.TabIndex = 6;
@@ -116,7 +116,7 @@
             // cbProdavac
             // 
             cbProdavac.FormattingEnabled = true;
-            cbProdavac.Location = new Point(573, 64);
+            cbProdavac.Location = new Point(547, 64);
             cbProdavac.Name = "cbProdavac";
             cbProdavac.Size = new Size(152, 23);
             cbProdavac.TabIndex = 7;
@@ -124,7 +124,7 @@
             // Projekcija
             // 
             Projekcija.AutoSize = true;
-            Projekcija.Location = new Point(15, 119);
+            Projekcija.Location = new Point(35, 166);
             Projekcija.Name = "Projekcija";
             Projekcija.Size = new Size(80, 15);
             Projekcija.TabIndex = 8;
@@ -133,7 +133,7 @@
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(37, 157);
+            label4.Location = new Point(37, 207);
             label4.Name = "label4";
             label4.Size = new Size(58, 15);
             label4.TabIndex = 9;
@@ -142,7 +142,7 @@
             // cbProjekcija
             // 
             cbProjekcija.FormattingEnabled = true;
-            cbProjekcija.Location = new Point(160, 149);
+            cbProjekcija.Location = new Point(180, 199);
             cbProjekcija.Name = "cbProjekcija";
             cbProjekcija.Size = new Size(152, 23);
             cbProjekcija.TabIndex = 10;
@@ -150,32 +150,25 @@
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(37, 285);
+            label5.Location = new Point(37, 290);
             label5.Name = "label5";
-            label5.Size = new Size(34, 15);
+            label5.Size = new Size(91, 15);
             label5.TabIndex = 11;
-            label5.Text = "Cena";
+            label5.Text = "Cena ( po karti )";
             // 
             // numKolicina
             // 
-            numKolicina.Location = new Point(160, 191);
+            numKolicina.Location = new Point(180, 244);
             numKolicina.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
             numKolicina.Name = "numKolicina";
             numKolicina.Size = new Size(152, 23);
             numKolicina.TabIndex = 13;
             numKolicina.Value = new decimal(new int[] { 1, 0, 0, 0 });
             // 
-            // txtCena
-            // 
-            txtCena.Location = new Point(160, 282);
-            txtCena.Name = "txtCena";
-            txtCena.Size = new Size(152, 23);
-            txtCena.TabIndex = 12;
-            // 
             // label6
             // 
             label6.AutoSize = true;
-            label6.Location = new Point(37, 199);
+            label6.Location = new Point(37, 252);
             label6.Name = "label6";
             label6.Size = new Size(49, 15);
             label6.TabIndex = 14;
@@ -184,7 +177,7 @@
             // label7
             // 
             label7.AutoSize = true;
-            label7.Location = new Point(37, 338);
+            label7.Location = new Point(37, 366);
             label7.Name = "label7";
             label7.Size = new Size(78, 15);
             label7.TabIndex = 15;
@@ -193,7 +186,7 @@
             // lblUkupanIznos
             // 
             lblUkupanIznos.AutoSize = true;
-            lblUkupanIznos.Location = new Point(260, 338);
+            lblUkupanIznos.Location = new Point(297, 366);
             lblUkupanIznos.Name = "lblUkupanIznos";
             lblUkupanIznos.Size = new Size(52, 15);
             lblUkupanIznos.TabIndex = 16;
@@ -201,7 +194,7 @@
             // 
             // btnDodaj
             // 
-            btnDodaj.Location = new Point(45, 379);
+            btnDodaj.Location = new Point(46, 443);
             btnDodaj.Name = "btnDodaj";
             btnDodaj.Size = new Size(237, 23);
             btnDodaj.TabIndex = 17;
@@ -213,16 +206,16 @@
             dgvStavke.AllowUserToAddRows = false;
             dgvStavke.AllowUserToDeleteRows = false;
             dgvStavke.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvStavke.Location = new Point(346, 131);
+            dgvStavke.Location = new Point(385, 155);
             dgvStavke.Name = "dgvStavke";
             dgvStavke.ReadOnly = true;
             dgvStavke.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvStavke.Size = new Size(419, 195);
+            dgvStavke.Size = new Size(594, 193);
             dgvStavke.TabIndex = 18;
             // 
             // btnObrisi
             // 
-            btnObrisi.Location = new Point(346, 338);
+            btnObrisi.Location = new Point(904, 383);
             btnObrisi.Name = "btnObrisi";
             btnObrisi.Size = new Size(75, 23);
             btnObrisi.TabIndex = 20;
@@ -232,7 +225,7 @@
             // 
             // btnSacuvaj
             // 
-            btnSacuvaj.Location = new Point(690, 342);
+            btnSacuvaj.Location = new Point(904, 422);
             btnSacuvaj.Name = "btnSacuvaj";
             btnSacuvaj.Size = new Size(75, 23);
             btnSacuvaj.TabIndex = 21;
@@ -243,24 +236,34 @@
             // 
             cbNacinPlacanja.FormattingEnabled = true;
             cbNacinPlacanja.Items.AddRange(new object[] { "Gotovina", "Kartica" });
-            cbNacinPlacanja.Location = new Point(160, 240);
+            cbNacinPlacanja.Location = new Point(169, 104);
             cbNacinPlacanja.Name = "cbNacinPlacanja";
-            cbNacinPlacanja.Size = new Size(152, 23);
+            cbNacinPlacanja.Size = new Size(200, 23);
             cbNacinPlacanja.TabIndex = 22;
             // 
             // label8
             // 
             label8.AutoSize = true;
-            label8.Location = new Point(37, 240);
+            label8.Location = new Point(46, 104);
             label8.Name = "label8";
             label8.Size = new Size(85, 15);
             label8.TabIndex = 23;
             label8.Text = "Nacin placanja";
             // 
+            // lblCena
+            // 
+            lblCena.AutoSize = true;
+            lblCena.Location = new Point(294, 290);
+            lblCena.Name = "lblCena";
+            lblCena.Size = new Size(52, 15);
+            lblCena.TabIndex = 24;
+            lblCena.Text = "0.00 RSD";
+            // 
             // UCDodajRacun
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(lblCena);
             Controls.Add(label8);
             Controls.Add(cbNacinPlacanja);
             Controls.Add(btnSacuvaj);
@@ -271,7 +274,6 @@
             Controls.Add(label7);
             Controls.Add(label6);
             Controls.Add(numKolicina);
-            Controls.Add(txtCena);
             Controls.Add(label5);
             Controls.Add(cbProjekcija);
             Controls.Add(label4);
@@ -285,7 +287,7 @@
             Controls.Add(label1);
             Controls.Add(dtpDatumProdaje);
             Name = "UCDodajRacun";
-            Size = new Size(800, 426);
+            Size = new Size(1029, 485);
             ((System.ComponentModel.ISupportInitialize)numKolicina).EndInit();
             ((System.ComponentModel.ISupportInitialize)dgvStavke).EndInit();
             ResumeLayout(false);
@@ -307,7 +309,6 @@
         public Button btnObrisi;
         public ComboBox cbProjekcija;
         public ComboBox cbProdavac;
-        public TextBox txtCena;
         public NumericUpDown numKolicina;
         public DataGridView dgvStavke;
         public Label lblUkupanIznos;
@@ -316,5 +317,6 @@
         public Button btnSacuvaj;
         private Label label8;
         public ComboBox cbNacinPlacanja;
+        public Label lblCena;
     }
 }

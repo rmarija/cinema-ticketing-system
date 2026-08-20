@@ -1,13 +1,11 @@
 ﻿using Klijent.UserControlls;
 using System;
 using System.Windows.Forms;
-
 namespace Klijent.GuiControllers
 {
     internal class MainCoordinator
     {
         private static MainCoordinator instance;
-
         public static MainCoordinator Instance
         {
             get
@@ -16,11 +14,9 @@ namespace Klijent.GuiControllers
                 return instance;
             }
         }
-
         private MainCoordinator()
         {
         }
-
         private FrmGlavna frmGlavna;
         private FrmLogin frmLogin;
 
@@ -30,13 +26,15 @@ namespace Klijent.GuiControllers
             {
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
-
                 Komunikacija.Instance.Connect();
 
                 frmLogin = new FrmLogin();
-                frmLogin.AutoSize = true;
 
-                Application.Run(frmLogin);
+                if (frmLogin.ShowDialog() == DialogResult.OK)
+                {
+                    frmGlavna = new FrmGlavna();
+                    Application.Run(frmGlavna);
+                }
             }
             catch (Exception)
             {
@@ -44,39 +42,27 @@ namespace Klijent.GuiControllers
             }
         }
 
-        internal void ShowFrmGlavna()
-        {
-            frmGlavna = new FrmGlavna();
-            frmGlavna.ShowDialog();
-        }
 
         internal void ShowDodajRacunPanel(object? sender, EventArgs e)
         {
             frmGlavna.ChangePanel(RacunGuiController.Instance.KreirajRacun());
         }
-
         internal void ShowPretraziRacunPanel(object? sender, EventArgs e)
         {
             frmGlavna.ChangePanel(RacunGuiController.Instance.PretraziRacun());
         }
-
         internal void ShowDodajKupcaPanel(object? sender, EventArgs e)
         {
             frmGlavna.ChangePanel(KupacGuiController.Instance.KreirajKupca());
         }
-
         internal void ShowPretraziKupcaPanel(object? sender, EventArgs e)
         {
             frmGlavna.ChangePanel(KupacGuiController.Instance.PretraziKupca());
         }
-
-    
         internal void ShowDodajStrucnuSpremuPanel(object? sender, EventArgs e)
         {
             frmGlavna.ChangePanel(StrucnaSpremaGuiController.Instance.UbaciStrucnuSpremu());
         }
-
-   
         internal void ShowPanel(UserControl ucPrikaz)
         {
             frmGlavna.ChangePanel(ucPrikaz);
