@@ -152,9 +152,9 @@
             label5.AutoSize = true;
             label5.Location = new Point(37, 290);
             label5.Name = "label5";
-            label5.Size = new Size(91, 15);
+            label5.Size = new Size(77, 15);
             label5.TabIndex = 11;
-            label5.Text = "Cena ( po karti )";
+            label5.Text = "Cena po karti";
             // 
             // numKolicina
             // 

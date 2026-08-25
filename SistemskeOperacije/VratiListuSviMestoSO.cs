@@ -13,7 +13,10 @@ namespace SistemskeOperacije
 
         protected override void ExecuteConcreteOperation()
         {
-            Result = broker.GetAll(new Mesto()).Cast<Mesto>().ToList();
+            Result = broker.GetAll(new Mesto())
+        .Cast<Mesto>()
+        .OrderBy(m => m.Naziv)
+        .ToList();
         }
     }
 }

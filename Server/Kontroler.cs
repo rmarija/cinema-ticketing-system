@@ -21,7 +21,7 @@ namespace Server
         {
         }
 
-        internal List<Prodavac> VratiSviProdavac()
+        internal List<Prodavac> VratiListuSviProdavac()
         {
             VratiListuSviProdavacSO so = new VratiListuSviProdavacSO();
             so.ExecuteTemplate();

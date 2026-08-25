@@ -58,7 +58,7 @@ namespace Zajednicki.Domen
 
         public override string ToString()
         {
-            return $"{Naziv} ({PostanskiBroj})";
+            return $"{Naziv}";
         }
     }
 }

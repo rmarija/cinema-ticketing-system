@@ -39,15 +39,32 @@ namespace Klijent.GuiControllers
             ucDodajKupca.txtIme.TextChanged += (s, e) => ObrisiGresku(ucDodajKupca.txtIme);
             ucDodajKupca.txtTelefon.TextChanged += (s, e) => ObrisiGresku(ucDodajKupca.txtTelefon);
             ucDodajKupca.txtEmail.TextChanged += (s, e) => ObrisiGresku(ucDodajKupca.txtEmail);
-            ucDodajKupca.txtNaziv.TextChanged += (s, e) => ObrisiGresku(ucDodajKupca.txtNaziv);
-            ucDodajKupca.txtPostanski.TextChanged += (s, e) => ObrisiGresku(ucDodajKupca.txtPostanski);
+
+            try
+            {
+                ucDodajKupca.cbMesto.DataSource = Komunikacija.Instance.VratiListuSviMesto();
+                ucDodajKupca.cbMesto.SelectedIndex = -1;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ne mogu da učitam listu mesta! " + ex.Message);
+            }
+
+            ucDodajKupca.txtPostanski.Enabled = false;   // uvek readonly, popunjava se automatski
+
+            ucDodajKupca.cbMesto.SelectedIndexChanged += (s, e) =>
+            {
+                ObrisiGresku(ucDodajKupca.cbMesto);
+                if (ucDodajKupca.cbMesto.SelectedItem is Mesto izabranoMesto)
+                    ucDodajKupca.txtPostanski.Text = izabranoMesto.PostanskiBroj;
+            };
 
             ucDodajKupca.btnSacuvaj.Click += SacuvajKupca;
 
             return ucDodajKupca;
         }
 
-        private bool ValidirajKupca(TextBox txtIme, TextBox txtEmail, TextBox txtTelefon, TextBox txtNaziv, TextBox txtPostanski)
+        private bool ValidirajKupca(TextBox txtIme, TextBox txtEmail, TextBox txtTelefon, ComboBox cbMesto)
         {
             if (errorProvider == null) return false;
             bool isValid = true;
@@ -90,25 +107,12 @@ namespace Klijent.GuiControllers
             }
             else ObrisiGresku(txtTelefon);
 
-            if (string.IsNullOrEmpty(txtNaziv.Text))
+            if (cbMesto.SelectedItem == null)
             {
-                PrikaziGresku(txtNaziv, "Naziv mesta je obavezan!");
+                PrikaziGresku(cbMesto, "Mesto je obavezno!");
                 isValid = false;
             }
-            else ObrisiGresku(txtNaziv);
-
-            string postanskiBroj = txtPostanski.Text.Trim();
-            if (string.IsNullOrEmpty(postanskiBroj))
-            {
-                PrikaziGresku(txtPostanski, "Poštanski broj je obavezan!");
-                isValid = false;
-            }
-            else if (!postanskiBroj.All(char.IsDigit))
-            {
-                PrikaziGresku(txtPostanski, "Poštanski broj može sadržati samo cifre!");
-                isValid = false;
-            }
-            else ObrisiGresku(txtPostanski);
+            else ObrisiGresku(cbMesto);
 
             return isValid;
         }
@@ -131,7 +135,7 @@ namespace Klijent.GuiControllers
         {
             if (ucDodajKupca == null) return;
 
-            if (!ValidirajKupca(ucDodajKupca.txtIme, ucDodajKupca.txtEmail, ucDodajKupca.txtTelefon, ucDodajKupca.txtNaziv, ucDodajKupca.txtPostanski))
+            if (!ValidirajKupca(ucDodajKupca.txtIme, ucDodajKupca.txtEmail, ucDodajKupca.txtTelefon, ucDodajKupca.cbMesto))
             {
                 return;
             }
@@ -141,11 +145,7 @@ namespace Klijent.GuiControllers
                 Naziv = ucDodajKupca.txtIme.Text,
                 Telefon = ucDodajKupca.txtTelefon.Text,
                 Email = ucDodajKupca.txtEmail.Text,
-                Mesto = new Mesto()
-                {
-                    Naziv = ucDodajKupca.txtNaziv.Text,
-                    PostanskiBroj = ucDodajKupca.txtPostanski.Text
-                }
+                Mesto = (Mesto)ucDodajKupca.cbMesto.SelectedItem
             };
 
             try
@@ -167,17 +167,16 @@ namespace Klijent.GuiControllers
             ucDodajKupca.txtIme.Text = string.Empty;
             ucDodajKupca.txtTelefon.Text = string.Empty;
             ucDodajKupca.txtEmail.Text = string.Empty;
-            ucDodajKupca.txtNaziv.Text = string.Empty;
+            ucDodajKupca.cbMesto.SelectedIndex = -1;
             ucDodajKupca.txtPostanski.Text = string.Empty;
 
             ObrisiGresku(ucDodajKupca.txtIme);
             ObrisiGresku(ucDodajKupca.txtTelefon);
             ObrisiGresku(ucDodajKupca.txtEmail);
-            ObrisiGresku(ucDodajKupca.txtNaziv);
-            ObrisiGresku(ucDodajKupca.txtPostanski);
+            ObrisiGresku(ucDodajKupca.cbMesto);
         }
 
-      
+
         internal Control PretraziKupca()
         {
             UCPretraziKupca ucPretraga = new UCPretraziKupca();
@@ -281,17 +280,28 @@ namespace Klijent.GuiControllers
             ucPrikaz.txtTelefon.Text = kupac.Telefon;
             ucPrikaz.txtEmail.Text = kupac.Email;
 
+            try
+            {
+                ucPrikaz.cbMesto.DataSource = Komunikacija.Instance.VratiListuSviMesto();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ne mogu da učitam listu mesta! " + ex.Message);
+            }
+
             if (kupac.Mesto != null)
             {
-                ucPrikaz.txtNaziv.Text = kupac.Mesto.Naziv;
-                ucPrikaz.txtPostanski.Text = kupac.Mesto.PostanskiBroj.ToString();
+                foreach (Mesto m in ucPrikaz.cbMesto.Items)
+                    if (m.IdMesto == kupac.Mesto.IdMesto) { ucPrikaz.cbMesto.SelectedItem = m; break; }
+
+                ucPrikaz.txtPostanski.Text = kupac.Mesto.PostanskiBroj;
             }
 
             ucPrikaz.txtIme.Enabled = false;
             ucPrikaz.txtTelefon.Enabled = false;
             ucPrikaz.txtEmail.Enabled = false;
-            ucPrikaz.txtNaziv.Enabled = false;
-            ucPrikaz.txtPostanski.Enabled = false;
+            ucPrikaz.cbMesto.Enabled = false;
+            ucPrikaz.txtPostanski.Enabled = false;  
 
             ucPrikaz.btnSacuvaj.Visible = false;
             ucPrikaz.btnIzmeni.Visible = true;
@@ -302,8 +312,12 @@ namespace Klijent.GuiControllers
             ucPrikaz.txtIme.TextChanged += (s, e) => ObrisiGresku(ucPrikaz.txtIme);
             ucPrikaz.txtTelefon.TextChanged += (s, e) => ObrisiGresku(ucPrikaz.txtTelefon);
             ucPrikaz.txtEmail.TextChanged += (s, e) => ObrisiGresku(ucPrikaz.txtEmail);
-            ucPrikaz.txtNaziv.TextChanged += (s, e) => ObrisiGresku(ucPrikaz.txtNaziv);
-            ucPrikaz.txtPostanski.TextChanged += (s, e) => ObrisiGresku(ucPrikaz.txtPostanski);
+            ucPrikaz.cbMesto.SelectedIndexChanged += (s, e) =>
+            {
+                ObrisiGresku(ucPrikaz.cbMesto);
+                if (ucPrikaz.cbMesto.SelectedItem is Mesto izabranoMesto)
+                    ucPrikaz.txtPostanski.Text = izabranoMesto.PostanskiBroj;
+            };
 
             ucPrikaz.btnIzmeni.Click += (sender, e) => OmoguciIzmenu(ucPrikaz, true);
             ucPrikaz.btnSacuvaj.Click += (sender, e) => SacuvajIzmeneKupca(ucPrikaz);
@@ -317,8 +331,8 @@ namespace Klijent.GuiControllers
             ucPrikaz.txtIme.Enabled = omoguceno;
             ucPrikaz.txtTelefon.Enabled = omoguceno;
             ucPrikaz.txtEmail.Enabled = omoguceno;
-            ucPrikaz.txtNaziv.Enabled = omoguceno;
-            ucPrikaz.txtPostanski.Enabled = omoguceno;
+            ucPrikaz.cbMesto.Enabled = omoguceno;
+           
 
             ucPrikaz.btnIzmeni.Visible = !omoguceno;
             ucPrikaz.btnObrisi.Visible = !omoguceno;
@@ -329,14 +343,13 @@ namespace Klijent.GuiControllers
                 ObrisiGresku(ucPrikaz.txtIme);
                 ObrisiGresku(ucPrikaz.txtEmail);
                 ObrisiGresku(ucPrikaz.txtTelefon);
-                ObrisiGresku(ucPrikaz.txtPostanski);
-                ObrisiGresku(ucPrikaz.txtNaziv);
+                ObrisiGresku(ucPrikaz.cbMesto);
             }
         }
 
         private void SacuvajIzmeneKupca(UCPrikaziKupca ucPrikaz)
         {
-            if (!ValidirajKupca(ucPrikaz.txtIme, ucPrikaz.txtEmail, ucPrikaz.txtTelefon, ucPrikaz.txtNaziv, ucPrikaz.txtPostanski))
+            if (!ValidirajKupca(ucPrikaz.txtIme, ucPrikaz.txtEmail, ucPrikaz.txtTelefon, ucPrikaz.cbMesto))
             {
                 return;
             }
@@ -357,12 +370,7 @@ namespace Klijent.GuiControllers
                     Naziv = ucPrikaz.txtIme.Text,
                     Telefon = ucPrikaz.txtTelefon.Text,
                     Email = ucPrikaz.txtEmail.Text,
-                    Mesto = new Mesto()
-                    {
-                        IdMesto = originalni.Mesto?.IdMesto ?? 0,
-                        Naziv = ucPrikaz.txtNaziv.Text,
-                        PostanskiBroj = ucPrikaz.txtPostanski.Text
-                    }
+                    Mesto = (Mesto)ucPrikaz.cbMesto.SelectedItem
                 };
 
                 Komunikacija.Instance.AzurirajKupac(azuriran);

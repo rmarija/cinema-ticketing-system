@@ -29,19 +29,16 @@ namespace Klijent.GuiControllers
         {
             ucDodajStrucnuSpremu = new UCDodajStrucnuSpremu();
             errorProvider = new ErrorProvider();
-
             ucDodajStrucnuSpremu.txtNaziv.TextChanged += (s, e) => ObrisiGresku(ucDodajStrucnuSpremu.txtNaziv);
-            ucDodajStrucnuSpremu.txtStrSprema.TextChanged += (s, e) => ObrisiGresku(ucDodajStrucnuSpremu.txtStrSprema);
-
+            ucDodajStrucnuSpremu.cbStrSprema.SelectedIndexChanged += (s, e) => ObrisiGresku(ucDodajStrucnuSpremu.cbStrSprema);
+            ucDodajStrucnuSpremu.cbStrSprema.SelectedIndex = -1;
             ucDodajStrucnuSpremu.btnDodaj.Click += DodajStrSpremu;
-
             return ucDodajStrucnuSpremu;
         }
 
         private bool ValidirajStrucnuSpremu()
         {
             if (ucDodajStrucnuSpremu == null || errorProvider == null) return false;
-
             bool isValid = true;
 
             if (string.IsNullOrEmpty(ucDodajStrucnuSpremu.txtNaziv.Text))
@@ -54,14 +51,14 @@ namespace Klijent.GuiControllers
                 ObrisiGresku(ucDodajStrucnuSpremu.txtNaziv);
             }
 
-            if (string.IsNullOrEmpty(ucDodajStrucnuSpremu.txtStrSprema.Text))
+            if (ucDodajStrucnuSpremu.cbStrSprema.SelectedItem == null)
             {
-                PrikaziGresku(ucDodajStrucnuSpremu.txtStrSprema, "Stepen obrazovanja je obavezan!");
+                PrikaziGresku(ucDodajStrucnuSpremu.cbStrSprema, "Stepen obrazovanja je obavezan!");
                 isValid = false;
             }
             else
             {
-                ObrisiGresku(ucDodajStrucnuSpremu.txtStrSprema);
+                ObrisiGresku(ucDodajStrucnuSpremu.cbStrSprema);
             }
 
             return isValid;
@@ -84,7 +81,6 @@ namespace Klijent.GuiControllers
         private void DodajStrSpremu(object? sender, EventArgs e)
         {
             if (ucDodajStrucnuSpremu == null) return;
-
             if (!ValidirajStrucnuSpremu())
             {
                 return;
@@ -93,14 +89,13 @@ namespace Klijent.GuiControllers
             StrucnaSprema objekatStrucnaSprema = new StrucnaSprema
             {
                 Naziv = ucDodajStrucnuSpremu.txtNaziv.Text,
-                StepenObrazovanja = ucDodajStrucnuSpremu.txtStrSprema.Text
+                StepenObrazovanja = ucDodajStrucnuSpremu.cbStrSprema.SelectedItem.ToString()
             };
 
             try
             {
                 Komunikacija.Instance.SacuvajStrucnaSprema(objekatStrucnaSprema);
                 MessageBox.Show("Stručna sprema je uspešno sačuvana!");
-
                 RefreshFormu();
             }
             catch (Exception ex)
@@ -109,15 +104,14 @@ namespace Klijent.GuiControllers
             }
         }
 
+
         private void RefreshFormu()
         {
             if (ucDodajStrucnuSpremu == null) return;
-
             ucDodajStrucnuSpremu.txtNaziv.Clear();
-            ucDodajStrucnuSpremu.txtStrSprema.Clear();
-
+            ucDodajStrucnuSpremu.cbStrSprema.SelectedIndex = -1;
             ObrisiGresku(ucDodajStrucnuSpremu.txtNaziv);
-            ObrisiGresku(ucDodajStrucnuSpremu.txtStrSprema);
+            ObrisiGresku(ucDodajStrucnuSpremu.cbStrSprema);
         }
     }
 }

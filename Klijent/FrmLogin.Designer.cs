@@ -40,18 +40,18 @@
             label1.AutoSize = true;
             label1.Location = new Point(201, 117);
             label1.Name = "label1";
-            label1.Size = new Size(60, 15);
+            label1.Size = new Size(85, 15);
             label1.TabIndex = 0;
-            label1.Text = "Username";
+            label1.Text = "Коrisnicko ime";
             // 
             // label2
             // 
             label2.AutoSize = true;
             label2.Location = new Point(201, 198);
             label2.Name = "label2";
-            label2.Size = new Size(57, 15);
+            label2.Size = new Size(47, 15);
             label2.TabIndex = 1;
-            label2.Text = "Password";
+            label2.Text = "Lozinka";
             // 
             // txtUsername
             // 
@@ -64,6 +64,7 @@
             // 
             txtPassword.Location = new Point(351, 198);
             txtPassword.Name = "txtPassword";
+            txtPassword.PasswordChar = '*';
             txtPassword.Size = new Size(214, 23);
             txtPassword.TabIndex = 3;
             // 
@@ -73,7 +74,7 @@
             btnLogin.Name = "btnLogin";
             btnLogin.Size = new Size(419, 26);
             btnLogin.TabIndex = 4;
-            btnLogin.Text = "Login";
+            btnLogin.Text = "Prijavi se";
             btnLogin.UseVisualStyleBackColor = true;
             btnLogin.Click += btnLogin_Click;
             // 

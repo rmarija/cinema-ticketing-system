@@ -20,7 +20,7 @@ namespace SistemskeOperacije
         {
             broker.Update(racun);
             string deleteQuery = $"delete from StavkaRacuna where idRacun = {racun.IdRacun}";
-            broker.GetByQuery(new StavkaRacuna(), deleteQuery);
+            broker.ExecuteNonQuery(deleteQuery);
             int rb = 1;
             foreach (var stavka in racun.Stavke)
             {

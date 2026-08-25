@@ -1,4 +1,6 @@
-﻿namespace Klijent.UserControlls
+﻿using Zajednicki.Domen;
+
+namespace Klijent.UserControlls
 {
     partial class UCDodajKupca
     {
@@ -39,7 +41,7 @@
             txtIme = new TextBox();
             txtEmail = new TextBox();
             txtTelefon = new TextBox();
-            txtNaziv = new TextBox();
+            cbMesto = new ComboBox();
             txtPostanski = new TextBox();
             btnSacuvaj = new Button();
             SuspendLayout();
@@ -136,12 +138,13 @@
             txtTelefon.Size = new Size(139, 23);
             txtTelefon.TabIndex = 10;
             // 
-            // txtNaziv
+            // cbMesto
             // 
-            txtNaziv.Location = new Point(651, 199);
-            txtNaziv.Name = "txtNaziv";
-            txtNaziv.Size = new Size(139, 23);
-            txtNaziv.TabIndex = 11;
+            cbMesto.FormattingEnabled = true;
+            cbMesto.Location = new Point(651, 199);
+            cbMesto.Name = "cbMesto";
+            cbMesto.Size = new Size(139, 23);
+            cbMesto.TabIndex = 11;
             // 
             // txtPostanski
             // 
@@ -152,9 +155,9 @@
             // 
             // btnSacuvaj
             // 
-            btnSacuvaj.Location = new Point(211, 410);
+            btnSacuvaj.Location = new Point(211, 416);
             btnSacuvaj.Name = "btnSacuvaj";
-            btnSacuvaj.Size = new Size(553, 31);
+            btnSacuvaj.Size = new Size(553, 25);
             btnSacuvaj.TabIndex = 13;
             btnSacuvaj.Text = "Sacuvaj";
             btnSacuvaj.UseVisualStyleBackColor = true;
@@ -165,7 +168,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             Controls.Add(btnSacuvaj);
             Controls.Add(txtPostanski);
-            Controls.Add(txtNaziv);
+            Controls.Add(cbMesto);
             Controls.Add(txtTelefon);
             Controls.Add(txtEmail);
             Controls.Add(txtIme);
@@ -197,7 +200,7 @@
         public TextBox txtIme;
         public TextBox txtEmail;
         public TextBox txtTelefon;
-        public TextBox txtNaziv;
+        public ComboBox cbMesto;
         public TextBox txtPostanski;
         public Button btnSacuvaj;
     }

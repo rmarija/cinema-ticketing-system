@@ -132,7 +132,7 @@ namespace Klijent.GuiControllers
                 ucDodajRacun.dgvStavke.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
 
                 if (ucDodajRacun.dgvStavke.Columns["Projekcija"] != null)
-                    ucDodajRacun.dgvStavke.Columns["Projekcija"].FillWeight = 200; // veća širina
+                    ucDodajRacun.dgvStavke.Columns["Projekcija"].FillWeight = 200; 
 
                 if (ucDodajRacun.dgvStavke.Columns["Kolicina"] != null)
                     ucDodajRacun.dgvStavke.Columns["Kolicina"].FillWeight = 60;
@@ -351,7 +351,29 @@ namespace Klijent.GuiControllers
                     Iznos = s.Kolicina * s.Cena
                 }).ToList();
 
-                ucPrikaz.dgvStavke.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+                if (ucPrikaz.dgvStavke.Columns.Count > 0)
+                {
+                    ucPrikaz.dgvStavke.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+
+                    if (ucPrikaz.dgvStavke.Columns["Projekcija"] != null)
+                        ucPrikaz.dgvStavke.Columns["Projekcija"].FillWeight = 200;
+
+                    if (ucPrikaz.dgvStavke.Columns["Kolicina"] != null)
+                        ucPrikaz.dgvStavke.Columns["Kolicina"].FillWeight = 60;
+
+                    if (ucPrikaz.dgvStavke.Columns["Cena"] != null)
+                    {
+                        ucPrikaz.dgvStavke.Columns["Cena"].FillWeight = 80;
+                        ucPrikaz.dgvStavke.Columns["Cena"].DefaultCellStyle.Format = "N2";
+                    }
+
+                    if (ucPrikaz.dgvStavke.Columns["Iznos"] != null)
+                    {
+                        ucPrikaz.dgvStavke.Columns["Iznos"].FillWeight = 80;
+                        ucPrikaz.dgvStavke.Columns["Iznos"].DefaultCellStyle.Format = "N2";
+                    }
+                }
+
                 double ukupno = stavkeIzmena.Sum(s => s.Kolicina * s.Cena);
                 ucPrikaz.lblUkupanIznos.Text = $"{ukupno:N2} RSD";
                 ucPrikaz.btnObrisi.Enabled = stavkeIzmena.Count > 0;
@@ -362,19 +384,15 @@ namespace Klijent.GuiControllers
 
             ucPrikaz.dgvStavke.CellClick += (s, e) =>
             {
-                if (e.RowIndex < 0) return;
-                if (ucPrikaz.dgvStavke.Rows[e.RowIndex].DataBoundItem is StavkaRacunaMV red)
-                {
-                    StavkaRacuna stavka = stavkeIzmena.FirstOrDefault(st => st.Karta.ToString() == red.Projekcija);
-                    if (stavka != null)
-                    {
-                        stavkaZaIzmenu = stavka;
-                        foreach (Karta k in ucPrikaz.cbProjekcija.Items)
-                            if (k.IdKarta == stavka.Karta.IdKarta) { ucPrikaz.cbProjekcija.SelectedItem = k; break; }
+                if (e.RowIndex < 0 || e.RowIndex >= stavkeIzmena.Count) return;
 
-                        ucPrikaz.numKolicina.Value = stavka.Kolicina;
-                    }
-                }
+                StavkaRacuna stavka = stavkeIzmena[e.RowIndex];
+                stavkaZaIzmenu = stavka;
+
+                foreach (Karta k in ucPrikaz.cbProjekcija.Items)
+                    if (k.IdKarta == stavka.Karta.IdKarta) { ucPrikaz.cbProjekcija.SelectedItem = k; break; }
+
+                ucPrikaz.numKolicina.Value = stavka.Kolicina;
             };
 
             void AzurirajPreviewIzmena()
@@ -488,6 +506,31 @@ namespace Klijent.GuiControllers
             TagPodaci podaci = (TagPodaci)ucPrikaz.Tag;
             Racun original = podaci.Racun;
 
+            if (ucPrikaz.cbKupac.SelectedIndex == -1 || ucPrikaz.cbNacinPlacanja.SelectedIndex == -1
+                || podaci.Stavke.Count == 0)
+            {
+                MessageBox.Show("Popunite sva polja i unesite bar jednu stavku!");
+                return;
+            }
+
+            DateTime datumProdaje = ucPrikaz.dtpDatumProdaje.Value;
+            DateTime datumCekiranja = ucPrikaz.dtpDatumCekiranja.Value;
+
+            if (datumCekiranja < datumProdaje)
+            {
+                MessageBox.Show("Datum čekiranja mora biti veći ili jednak datumu prodaje!");
+                return;
+            }
+
+            foreach (var stavka in podaci.Stavke)
+            {
+                if (datumProdaje > stavka.Karta.DatumVremeProjekcije)
+                {
+                    MessageBox.Show($"Datum prodaje ne može biti nakon datuma projekcije za film {stavka.Karta.NazivFilma}!");
+                    return;
+                }
+            }
+
             Racun azuriran = new Racun
             {
                 IdRacun = original.IdRacun,
@@ -508,7 +551,7 @@ namespace Klijent.GuiControllers
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Greška pri ažuriranju: " + ex.Message);
+                MessageBox.Show("Greska pri azuriranju racuna!");
             }
         }
     }

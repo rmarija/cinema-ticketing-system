@@ -62,7 +62,7 @@ namespace Server
                 switch (zahtev.Operacija)
                 {
                     case Operacija.VratiSviProdavac:
-                        odgovor.Objekat = Kontroler.Instance.VratiSviProdavac();
+                        odgovor.Objekat = Kontroler.Instance.VratiListuSviProdavac();
                         break;
                     case Operacija.VratiListuSviKupac:
                         odgovor.Objekat = Kontroler.Instance.VratiListuSviKupac();

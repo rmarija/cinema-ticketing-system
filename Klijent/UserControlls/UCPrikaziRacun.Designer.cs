@@ -89,7 +89,7 @@
             // lblUkupanIznos
             // 
             lblUkupanIznos.AutoSize = true;
-            lblUkupanIznos.Location = new Point(314, 345);
+            lblUkupanIznos.Location = new Point(478, 345);
             lblUkupanIznos.Name = "lblUkupanIznos";
             lblUkupanIznos.Size = new Size(52, 15);
             lblUkupanIznos.TabIndex = 38;
@@ -98,7 +98,7 @@
             // label7
             // 
             label7.AutoSize = true;
-            label7.Location = new Point(22, 345);
+            label7.Location = new Point(394, 345);
             label7.Name = "label7";
             label7.Size = new Size(78, 15);
             label7.TabIndex = 37;
@@ -107,7 +107,7 @@
             // label6
             // 
             label6.AutoSize = true;
-            label6.Location = new Point(42, 253);
+            label6.Location = new Point(56, 253);
             label6.Name = "label6";
             label6.Size = new Size(49, 15);
             label6.TabIndex = 36;
@@ -116,34 +116,34 @@
             // 
             // numKolicina
             // 
-            numKolicina.Location = new Point(179, 245);
+            numKolicina.Location = new Point(305, 245);
             numKolicina.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
             numKolicina.Name = "numKolicina";
-            numKolicina.Size = new Size(152, 23);
+            numKolicina.Size = new Size(74, 23);
             numKolicina.TabIndex = 35;
             numKolicina.Value = new decimal(new int[] { 1, 0, 0, 0 });
             // 
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(42, 296);
+            label5.Location = new Point(56, 296);
             label5.Name = "label5";
-            label5.Size = new Size(34, 15);
+            label5.Size = new Size(77, 15);
             label5.TabIndex = 33;
-            label5.Text = "Cena";
+            label5.Text = "Cena po karti";
             // 
             // cbProjekcija
             // 
             cbProjekcija.FormattingEnabled = true;
-            cbProjekcija.Location = new Point(179, 207);
+            cbProjekcija.Location = new Point(158, 199);
             cbProjekcija.Name = "cbProjekcija";
-            cbProjekcija.Size = new Size(152, 23);
+            cbProjekcija.Size = new Size(221, 23);
             cbProjekcija.TabIndex = 32;
             // 
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(42, 215);
+            label4.Location = new Point(56, 207);
             label4.Name = "label4";
             label4.Size = new Size(58, 15);
             label4.TabIndex = 31;
@@ -152,7 +152,7 @@
             // Projekcija
             // 
             Projekcija.AutoSize = true;
-            Projekcija.Location = new Point(20, 166);
+            Projekcija.Location = new Point(20, 171);
             Projekcija.Name = "Projekcija";
             Projekcija.Size = new Size(80, 15);
             Projekcija.TabIndex = 30;
@@ -228,7 +228,7 @@
             // 
             // btnIzmeni
             // 
-            btnIzmeni.Location = new Point(889, 366);
+            btnIzmeni.Location = new Point(889, 341);
             btnIzmeni.Name = "btnIzmeni";
             btnIzmeni.Size = new Size(75, 23);
             btnIzmeni.TabIndex = 43;
@@ -256,7 +256,7 @@
             // lblCena
             // 
             lblCena.AutoSize = true;
-            lblCena.Location = new Point(279, 296);
+            lblCena.Location = new Point(327, 296);
             lblCena.Name = "lblCena";
             lblCena.Size = new Size(52, 15);
             lblCena.TabIndex = 46;
@@ -264,7 +264,7 @@
             // 
             // btnObrisi
             // 
-            btnObrisi.Location = new Point(889, 395);
+            btnObrisi.Location = new Point(889, 366);
             btnObrisi.Name = "btnObrisi";
             btnObrisi.Size = new Size(75, 23);
             btnObrisi.TabIndex = 47;

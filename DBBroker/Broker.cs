@@ -113,5 +113,13 @@ namespace DBBroker
             command.CommandText = query;
             return Convert.ToInt32(command.ExecuteScalar());
         }
+
+        public void ExecuteNonQuery(string query)
+        {
+            SqlCommand cmd = connection.CreateCommand();
+            cmd.CommandText = query;
+            cmd.ExecuteNonQuery();
+            cmd.Dispose();
+        }
     }
 }
