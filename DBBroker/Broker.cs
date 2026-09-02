@@ -59,6 +59,17 @@ namespace DBBroker
             return list;
         }
 
+        public List<IEntity> GetByQuery(IEntity entity, string query, SqlParameter[] parametri)
+        {
+            SqlCommand command = connection.CreateCommand();
+            command.CommandText = query;
+            command.Parameters.AddRange(parametri);
+            using SqlDataReader reader = command.ExecuteReader();
+            List<IEntity> list = entity.GetReaderList(reader);
+            command.Dispose();
+            return list;
+        }
+
         public void Add(IEntity entity)
         {
             SqlCommand cmd = connection.CreateCommand();

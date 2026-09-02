@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Data.SqlClient;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,19 +20,22 @@ namespace SistemskeOperacije
 
         protected override void ExecuteConcreteOperation()
         {
-            string k = kriterijum.Replace("'", "''");
+            string query = @"SELECT r.idRacun, r.datumProdaje, r.datumCekiranja, r.ukupanIznos, r.nacinPlacanja,
+             p.idProdavac, p.ime, p.prezime,
+             k.idKupac, k.naziv as kupacNaziv
+      FROM Racun r
+      INNER JOIN Prodavac p ON r.idProdavac = p.idProdavac
+      INNER JOIN Kupac k ON r.idKupac = k.idKupac
+      WHERE p.ime LIKE @kriterijum OR p.prezime LIKE @kriterijum OR p.ime + ' ' + p.prezime LIKE @kriterijum
+      ORDER BY r.datumProdaje DESC";
 
-            string query = $@"SELECT r.idRacun, r.datumProdaje, r.datumCekiranja, r.ukupanIznos, r.nacinPlacanja,
-                 p.idProdavac, p.ime, p.prezime,
-                 k.idKupac, k.naziv as kupacNaziv
-          FROM Racun r
-          INNER JOIN Prodavac p ON r.idProdavac = p.idProdavac
-          INNER JOIN Kupac k ON r.idKupac = k.idKupac
-          WHERE p.ime LIKE '%{k}%' OR p.prezime LIKE '%{k}%' OR p.ime + ' ' + p.prezime LIKE '%{k}%'
-          ORDER BY r.datumProdaje DESC";
+            SqlParameter[] parametri = new SqlParameter[]
+            {
+        new SqlParameter("@kriterijum", "%" + kriterijum + "%")
+            };
 
             Racun racunModel = new Racun();
-            List<IEntity> result = broker.GetByQuery(racunModel, query);
+            List<IEntity> result = broker.GetByQuery(racunModel, query, parametri);
 
             List<Racun> racuni = result.Cast<Racun>().ToList();
 

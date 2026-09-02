@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.Data.SqlClient;
+using System.Collections.Generic;
 using System.Linq;
 using Zajednicki.Domen;
 
@@ -16,14 +17,19 @@ namespace SistemskeOperacije
 
         protected override void ExecuteConcreteOperation()
         {
-            string bezbedanNaziv = nazivMesta.Replace("'", "''");
-            string query = $@"SELECT k.idKupac, k.naziv, k.email, k.telefon,
-                              m.idMesto, m.naziv as mestoNaziv, m.postanskiBroj
-                              FROM Kupac k
-                              INNER JOIN Mesto m ON k.idMesto = m.idMesto
-                              WHERE m.naziv LIKE '{bezbedanNaziv}%'";
+            string query = @"SELECT k.idKupac, k.naziv, k.email, k.telefon,
+                      m.idMesto, m.naziv as mestoNaziv, m.postanskiBroj
+                      FROM Kupac k
+                      INNER JOIN Mesto m ON k.idMesto = m.idMesto
+                      WHERE m.naziv LIKE @nazivMesta";
+
+            SqlParameter[] parametri = new SqlParameter[]
+            {
+        new SqlParameter("@nazivMesta", nazivMesta + "%")
+            };
+
             Kupac kupacModel = new Kupac();
-            List<IEntity> result = broker.GetByQuery(kupacModel, query);
+            List<IEntity> result = broker.GetByQuery(kupacModel, query, parametri);
             Result = result.Cast<Kupac>().ToList();
         }
     }

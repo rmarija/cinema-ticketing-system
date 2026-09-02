@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Zajednicki.Domen;
 using System.Collections.Generic;
+using Microsoft.Data.SqlClient;
 
 namespace SistemskeOperacije
 {
@@ -22,9 +23,14 @@ namespace SistemskeOperacije
 
         protected override void ExecuteConcreteOperation()
         {
-            string query = $"SELECT * FROM Prodavac WHERE username = '{username}' AND password = '{password}'";
+            string query = "SELECT * FROM Prodavac WHERE username = @username AND password = @password";
             Prodavac p = new Prodavac();
-            List<IEntity> result = broker.GetByQuery(p, query);
+            SqlParameter[] parametri = new SqlParameter[]
+            {
+        new SqlParameter("@username", username),
+        new SqlParameter("@password", password)
+            };
+            List<IEntity> result = broker.GetByQuery(p, query, parametri);
             Result = result.Count > 0;
         }
     }
