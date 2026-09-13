@@ -11,7 +11,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Klijent", "Klijent\Klijent.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Server", "Server\Server.csproj", "{7B561954-FEE3-41B1-BE6F-DDC6AE6A1CF3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zajednicki", "Zajednicki\Zajednicki.csproj", "{1E71CC9D-B3B0-418C-83FD-768D75BC7A7F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Zajednicki", "Zajednicki\Zajednicki.csproj", "{1E71CC9D-B3B0-418C-83FD-768D75BC7A7F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{27D34821-5FC2-4814-B803-FA0D201C15C4}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

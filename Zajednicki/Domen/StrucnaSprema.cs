@@ -9,6 +9,9 @@ namespace Zajednicki.Domen
         public int IdStrucnaSprema { get; set; }
         public string Naziv { get; set; }
         public string StepenObrazovanja { get; set; }
+        public Prodavac Prodavac { get; set; }
+
+        public DateTime DatumSticanja { get; set; }
 
         public string TableName => "StrucnaSprema";
 

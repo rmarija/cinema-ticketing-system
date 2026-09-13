@@ -20,6 +20,14 @@ namespace SistemskeOperacije
         {
             int id = broker.AddWithId(strSprema);
             strSprema.IdStrucnaSprema = id;
+
+            PrSS prss = new PrSS
+            {
+                Prodavac = strSprema.Prodavac,
+                StrucnaSprema = strSprema,
+                DatumSticanja = strSprema.DatumSticanja
+            };
+            broker.Add(prss);
         }
     }
 }

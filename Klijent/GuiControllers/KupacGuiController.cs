@@ -15,7 +15,6 @@ namespace Klijent.GuiControllers
         private static KupacGuiController? instance;
         private ErrorProvider? errorProvider;
 
-        // Promenjeno ime forme u UCDodajKupca
         private UCDodajKupca? ucDodajKupca;
 
         public static KupacGuiController Instance
@@ -50,8 +49,7 @@ namespace Klijent.GuiControllers
                 MessageBox.Show("Ne mogu da učitam listu mesta! " + ex.Message);
             }
 
-            ucDodajKupca.txtPostanski.Enabled = false;   // uvek readonly, popunjava se automatski
-
+            ucDodajKupca.txtPostanski.Enabled = false;  
             ucDodajKupca.cbMesto.SelectedIndexChanged += (s, e) =>
             {
                 ObrisiGresku(ucDodajKupca.cbMesto);
@@ -250,7 +248,7 @@ namespace Klijent.GuiControllers
             }
         }
 
-   
+
 
 
         private void PrikaziDetaljeKupca(int idKupac)
@@ -263,6 +261,10 @@ namespace Klijent.GuiControllers
                 {
                     UCPrikaziKupca ucPrikaz = PopuniPodatkePrikaz(kupac);
                     MainCoordinator.Instance.ShowPanel(ucPrikaz);
+                }
+                else
+                {
+                    MessageBox.Show("Sistem ne može da nađe kupca!"); 
                 }
             }
             catch (Exception ex)

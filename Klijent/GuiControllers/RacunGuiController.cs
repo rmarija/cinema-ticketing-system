@@ -62,7 +62,7 @@ namespace Klijent.GuiControllers
                 ucDodajRacun.cbProjekcija.SelectedIndex = -1;
 
                 ucDodajRacun.btnObrisi.Enabled = false;
-                ucDodajRacun.cbNacinPlacanja.SelectedIndex = -1;
+                ucDodajRacun.cbNacinPlacanja.SelectedItem = "Gotovina";
                 ucDodajRacun.dtpDatumProdaje.Value = DateTime.Now;
                 ucDodajRacun.dtpDatumCekiranja.Value = DateTime.Now;
                 ucDodajRacun.lblCena.Text = "0.00 RSD";
@@ -93,10 +93,20 @@ namespace Klijent.GuiControllers
 
             StavkaRacuna postojecaStavka = stavkeRacuna.FirstOrDefault(s => s.Karta.IdKarta == izabranaKarta.IdKarta);
 
-            if (postojecaStavka != null) postojecaStavka.Kolicina += kolicina;
+            if (postojecaStavka != null)
+            {
+                postojecaStavka.Kolicina += kolicina;
+                postojecaStavka.Iznos = postojecaStavka.Kolicina * postojecaStavka.Cena; 
+            }
             else
             {
-                stavkeRacuna.Add(new StavkaRacuna { Karta = izabranaKarta, Kolicina = kolicina, Cena = cena });
+                stavkeRacuna.Add(new StavkaRacuna
+                {
+                    Karta = izabranaKarta,
+                    Kolicina = kolicina,
+                    Cena = cena,
+                    Iznos = kolicina * cena          
+                });
             }
 
             OsveziTabeluKreiraj();
@@ -336,6 +346,8 @@ namespace Klijent.GuiControllers
             foreach (Prodavac p in ucPrikaz.cbProdavac.Items)
                 if (p.IdProdavac == racun.Prodavac.IdProdavac) { ucPrikaz.cbProdavac.SelectedItem = p; break; }
 
+            ucPrikaz.cbNacinPlacanja.SelectedItem = racun.NacinPlacanja;
+
             ucPrikaz.dtpDatumProdaje.Value = racun.DatumProdaje;
             ucPrikaz.dtpDatumCekiranja.Value = racun.DatumCekiranja;
             ucPrikaz.cbProjekcija.SelectedIndex = -1;
@@ -429,8 +441,21 @@ namespace Klijent.GuiControllers
                 }
 
                 StavkaRacuna postojeca = stavkeIzmena.FirstOrDefault(st => st.Karta.IdKarta == izabranaKarta.IdKarta);
-                if (postojeca != null) postojeca.Kolicina = kolicina;
-                else stavkeIzmena.Add(new StavkaRacuna { Karta = izabranaKarta, Kolicina = kolicina, Cena = cena });
+                if (postojeca != null)
+                {
+                    postojeca.Kolicina = kolicina;
+                    postojeca.Iznos = postojeca.Kolicina * postojeca.Cena; 
+                }
+                else
+                {
+                    stavkeIzmena.Add(new StavkaRacuna
+                    {
+                        Karta = izabranaKarta,
+                        Kolicina = kolicina,
+                        Cena = cena,
+                        Iznos = kolicina * cena          
+                    });
+                }
 
                 stavkaZaIzmenu = null;  
 

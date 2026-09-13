@@ -33,6 +33,19 @@ namespace Klijent.GuiControllers
             ucDodajStrucnuSpremu.cbStrSprema.SelectedIndexChanged += (s, e) => ObrisiGresku(ucDodajStrucnuSpremu.cbStrSprema);
             ucDodajStrucnuSpremu.cbStrSprema.SelectedIndex = -1;
             ucDodajStrucnuSpremu.btnDodaj.Click += DodajStrSpremu;
+
+            try
+            {
+                ucDodajStrucnuSpremu.cbProdavac.DataSource = Komunikacija.Instance.VratiSviProdavac();
+                ucDodajStrucnuSpremu.cbProdavac.SelectedIndex = -1;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ne mogu da učitam listu prodavaca! " + ex.Message);
+            }
+            ucDodajStrucnuSpremu.cbProdavac.SelectedIndexChanged += (s, e) => ObrisiGresku(ucDodajStrucnuSpremu.cbProdavac);
+
+
             return ucDodajStrucnuSpremu;
         }
 
@@ -59,6 +72,15 @@ namespace Klijent.GuiControllers
             else
             {
                 ObrisiGresku(ucDodajStrucnuSpremu.cbStrSprema);
+            }
+            if (ucDodajStrucnuSpremu.cbProdavac.SelectedItem == null)
+            {
+                PrikaziGresku(ucDodajStrucnuSpremu.cbProdavac, "Prodavac je obavezan!");
+                isValid = false;
+            }
+            else
+            {
+                ObrisiGresku(ucDodajStrucnuSpremu.cbProdavac);
             }
 
             return isValid;
@@ -89,7 +111,9 @@ namespace Klijent.GuiControllers
             StrucnaSprema objekatStrucnaSprema = new StrucnaSprema
             {
                 Naziv = ucDodajStrucnuSpremu.txtNaziv.Text,
-                StepenObrazovanja = ucDodajStrucnuSpremu.cbStrSprema.SelectedItem.ToString()
+                StepenObrazovanja = ucDodajStrucnuSpremu.cbStrSprema.SelectedItem.ToString(),
+                Prodavac = (Prodavac)ucDodajStrucnuSpremu.cbProdavac.SelectedItem,
+                DatumSticanja = ucDodajStrucnuSpremu.dtpDatumSticanja.Value
             };
 
             try
@@ -110,6 +134,9 @@ namespace Klijent.GuiControllers
             if (ucDodajStrucnuSpremu == null) return;
             ucDodajStrucnuSpremu.txtNaziv.Clear();
             ucDodajStrucnuSpremu.cbStrSprema.SelectedIndex = -1;
+            ucDodajStrucnuSpremu.cbProdavac.SelectedIndex = -1;
+            ucDodajStrucnuSpremu.dtpDatumSticanja.Value = DateTime.Now;
+            ObrisiGresku(ucDodajStrucnuSpremu.cbProdavac);
             ObrisiGresku(ucDodajStrucnuSpremu.txtNaziv);
             ObrisiGresku(ucDodajStrucnuSpremu.cbStrSprema);
         }
